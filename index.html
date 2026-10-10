@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAB Secure - SAMA Compliant v20 STABLE</title>
+<title>SAB Secure - SAMA Compliant v21</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
@@ -26,12 +26,12 @@
     <div class="w-20 h-20 bg-black rounded-full mx-auto flex items-center justify-center text-4xl">📍</div>
     <h1 id="title" class="text-[20px] font-black text-black mt-3">SAB - Saudi First Bank</h1>
     <p id="sub" class="text-[12px] font-bold text-black">Verification of the site is compatible with SAMA.</p>
-    <span class="inline-block mt-2 bg-green-200 text-black text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA Active - Install Ready v20</span>
+    <span class="inline-block mt-2 bg-green-200 text-black text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA Active - v21 STABLE</span>
   </div>
   <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
     <div class="flex justify-between items-center h-[26px]">
       <span id="locLabel" class="text-[11px] font-black text-black">User site</span>
-      <span class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - STABLE</span>
+      <span class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE - STABLE</span>
     </div>
     <p id="location" dir="ltr" class="text-[18px] font-black text-black mt-3 text-center">--.------, --.------</p>
     <div class="flex justify-center mt-2"><p id="country" class="text-[12px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-2 max-w-full">📍 Detecting...</p></div>
@@ -50,31 +50,28 @@
 
 <script>
 let lang='en', lastLat=null, lastLon=null, lockedPlace=null, lockedCoords=null;
-
 const T={
  en:{title:"SAB - Saudi First Bank", sub:"Verification of the site is compatible with SAMA.", loc:"User site", ver:"VERIFICATION", otp:"Enter OTP", btn:"Verify", clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site", mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED", safe:"✅ Safe follow-up - Allowed", block:"🚫 BLOCKED - Risk 960"},
  ar:{title:"SAB - البنك السعودي الأول", sub:"التحقق من الموقع متوافق مع SAMA", loc:"موقع المستخدم", ver:"التحقق", otp:"أدخل رمز التحقق", btn:"تحقق", clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف", mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور", safe:"✅ متابعة آمنة - مسموح", block:"🚫 محظور - خطر 960"}
 };
-
 function setLang(l){
   lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr';
   document.getElementById('btnEn').className=l==='en'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border";
   document.getElementById('btnAr').className=l==='ar'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border";
   document.getElementById('title').innerText=T[l].title; document.getElementById('sub').innerText=T[l].sub; document.getElementById('locLabel').innerText=T[l].loc; document.getElementById('verLabel').innerText=T[l].ver; document.getElementById('otp').placeholder=T[l].otp; document.getElementById('vBtn').innerText=T[l].btn;
-  if(lockedPlace){ document.getElementById('country').innerText = lockedPlace; }
+  if(lockedPlace) document.getElementById('country').innerText=lockedPlace;
 }
-
 function getFallback(lat,lon){
-  if(lat>16 && lat<33 && lon>34 && lon<56) return lang==='ar'? "🇸🇦 الرياض، المملكة العربية السعودية" : "🇸🇦 Riyadh, Kingdom of Saudi Arabia";
+  // KSA check
+  if(lat>16 && lat<33 && lon>34 && lon<56){
+    if(lat>=24 && lat<=25 && lon>=46 && lon<=47) return lang==='ar'? "🇸🇦 الرياض، المملكة العربية السعودية - داخل المملكة" : "🇸🇦 Riyadh, Saudi Arabia - Within KSA";
+    return lang==='ar'? "🇸🇦 المملكة العربية السعودية - داخل المملكة" : "🇸🇦 Saudi Arabia - Within KSA";
+  }
   if(lat>=26.5 && lat<=27.8 && lon>=76.2 && lon<=77.5) return lang==='ar'? "🇮🇳 ألوار، راجستان، الهند - خارج المملكة" : "🇮🇳 Alwar, Rajasthan, India - Outside KSA";
-  if(lat>=13 && lat<=14 && lon>=78.8 && lon<=80) return lang==='ar'? "🇮🇳 تيروباتي، الهند - خارج المملكة" : "🇮🇳 Tirupati, India - Outside KSA";
   if(lat>=8 && lat<=37 && lon>=68 && lon<=97.5) return lang==='ar'? "🇮🇳 الهند - خارج المملكة" : "🇮🇳 India - Outside KSA";
-  if(lat>=4.8 && lat<=6.0 && lon>=12.8 && lon<=14.2) return lang==='ar'? "🇨🇲 بيلابو، الكاميرون" : "🇨🇲 Bélabo, Cameroon - Outside KSA";
-  if(lat>=1.6 && lat<=13.2 && lon>=8.2 && lon<=16.5) return lang==='ar'? "🇨🇲 الكاميرون" : "🇨🇲 Cameroon - Outside KSA";
-  if(lat>=4 && lat<=14 && lon>=2 && lon<=15) return lang==='ar'? "🇳🇬 نيجيريا" : "🇳🇬 Nigeria - Outside KSA";
+  if(lat>=1.6 && lat<=13.2 && lon>=8.2 && lon<=16.5) return lang==='ar'? "🇨🇲 الكاميرون - خارج المملكة" : "🇨🇲 Cameroon - Outside KSA";
   return lang==='ar'? `🌍 خارج المملكة - ${lat.toFixed(2)}, ${lon.toFixed(2)}` : `🌍 Outside KSA - ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
 }
-
 async function fetchDynamic(lat,lon){
   try{
     const c=new AbortController(); setTimeout(()=>c.abort(),4000);
@@ -82,15 +79,17 @@ async function fetchDynamic(lat,lon){
     const d=await r.json(); if(!d.countryName) return null;
     let flag="🌍"; if(d.countryCode){ try{ flag=String.fromCodePoint(...d.countryCode.toUpperCase().split('').map(x=>127397+x.charCodeAt())) }catch{} }
     const city=d.city||d.locality||d.principalSubdivision||"";
-    return lang==='ar'? `${flag} ${city?city+'، ':''}${d.countryName} - خارج المملكة` : `${flag} ${city?city+', ':''}${d.countryName} - Outside KSA`;
+    const isKSA = d.countryCode==='SA' || d.countryName==='Saudi Arabia';
+    if(isKSA){
+      return lang==='ar'? `${flag} ${city?city+'، ':''}${d.countryName} - داخل المملكة` : `${flag} ${city?city+', ':''}${d.countryName} - Within KSA`;
+    } else {
+      return lang==='ar'? `${flag} ${city?city+'، ':''}${d.countryName} - خارج المملكة` : `${flag} ${city?city+', ':''}${d.countryName} - Outside KSA`;
+    }
   }catch{ return null; }
 }
-
 async function render(d){
-  // SAME location pe dobara render mat karo - STABLE
-  if(lastLat!==null && Math.abs(d.lat-lastLat)<0.00005 && Math.abs(d.lon-lastLon)<0.00005){
-    return;
-  }
+  // STABLE - same location pe dobara mat karo
+  if(lastLat!==null && Math.abs(d.lat-lastLat)<0.00005 && Math.abs(d.lon-lastLon)<0.00005) return;
   lastLat=d.lat; lastLon=d.lon;
 
   document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
@@ -100,8 +99,8 @@ async function render(d){
   if(d.block){ s.innerText=T[lang].mock; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-red-200 text-black border-2 border-red-700 flex items-center justify-center text-center"; b.innerText=T[lang].block; b.className="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
   else { s.innerText=T[lang].clean; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 flex items-center justify-center text-center"; b.innerText=T[lang].safe; b.className="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
 
-  // LOCK LOGIC - Ek baar naam aaya to lock, refresh pe bhi nahi hatega
-  if(!lockedPlace ||!lockedCoords || Math.abs(lockedCoords.lat - d.lat)>0.001 || Math.abs(lockedCoords.lon - d.lon)>0.001){
+  // LOCK - ek baar aaya to overwrite nahi
+  if(!lockedPlace ||!lockedCoords || Math.abs(lockedCoords.lat-d.lat)>0.001 || Math.abs(lockedCoords.lon-d.lon)>0.001){
     lockedPlace = getFallback(d.lat,d.lon);
     lockedCoords = {lat:d.lat, lon:d.lon};
     document.getElementById('country').innerText = lockedPlace;
@@ -111,19 +110,16 @@ async function render(d){
     document.getElementById('country').innerText = lockedPlace;
   }
 }
-
 function check(p){
   let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude;
   let inSaudi=lat>16&&lat<33&&lon>34&&lon<56; let isMock=false;
-  if((alt===0||alt===null)&&acc<50) isMock=true; if(acc<=3) isMock=true;
+  if((alt===0||alt===null)&&acc<2) isMock=true; // ab 0m pe hi fake, 8m real ko allow
+  if(acc===0) isMock=true;
   render({lat,lon,acc,alt,block:isMock||!inSaudi});
 }
 function verify(){ let v=document.getElementById('otp').value; alert(v.length>=4?(lang==='ar'?"✅ تم التحقق":"✅ Verified - "+v):"Enter OTP"); }
-
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
-// IMPORTANT: getCurrentPosition + watchPosition dono ek saath nahi - sirf ek baar
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 navigator.geolocation.getCurrentPosition(check, e=>{ document.getElementById('status').innerText="Enable Location"; }, {enableHighAccuracy:true, timeout:20000, maximumAge:0});
-
 setLang('en');
 </script>
 </body>
