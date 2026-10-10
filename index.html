@@ -3,88 +3,198 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAB Secure - v65 Final Secure</title>
+<title>SAB v65.1 - FINAL SECURE - SAME DESIGN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, sans-serif;}
-body{background:#0f172a; display:flex; justify-content:center; min-height:100vh;}
-.phone{width:390px; background:#fff; min-height:100vh; position:relative; border-radius:24px; overflow:hidden; margin:10px;}
-.header{display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid #eee;}
-.live{padding:6px 14px; background:#ecfdf5; border:1px solid #bbf7d0; border-radius:20px; font-size:13px; font-weight:700; color:#059669;}
-.live b{color:#dc2626; margin-right:6px;}
-.screen{padding:20px;}
-.center{text-align:center;}
-.bag{width:80px;height:80px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin:10px auto 16px;}
-h1{font-size:26px;font-weight:800;margin-bottom:6px;}
-.sub{color:#94a3b8;font-size:13px;margin-bottom:18px;}
-.blackCard{background:#0f0f0f;color:#fff;border-radius:22px;padding:22px;text-align:center;margin-bottom:16px;}
-.blackCard .lbl{font-size:14px;opacity:0.8;margin-bottom:6px;}
-.blackCard .bal{font-size:32px;font-weight:800;margin-bottom:14px;}
-.yellowPill{background:#fef08a;color:#000;padding:12px;border-radius:14px;font-weight:700;font-size:13px;line-height:1.3;}
-.whiteCard{border:2px solid #000;border-radius:20px;padding:14px;margin-bottom:12px;}
-.coord{font-weight:800;font-size:18px;margin-bottom:4px;}
-.small{font-size:13px;color:#64748b;margin-bottom:10px;}
-.redPill{background:#ffe2e2;color:#991b1b;border:2px solid #dc2626;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:14px;}
-.greenPill{background:#dcfce7;color:#166534;border:1px solid #16a34a;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:14px;}
-.btn{width:100%;padding:16px;border-radius:16px;font-weight:800;font-size:15px;cursor:pointer;border:none;margin-bottom:10px;}
-.btnBlack{background:#000;color:#fff;}
-.btnWhite{background:#fff;color:#000;border:2px solid #000;}
-.btnBlocked{background:#ffe2e2;color:#991b1b;border:2px solid #dc2626;}
-.hidden{display:none;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui}
+body{background:#0f172a;display:flex;justify-content:center;padding:12px}
+.app{width:100%;max-width:390px;background:#fff;border-radius:32px;padding:16px 16px 24px;min-height:92vh}
+.lang-switch{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.lang-btn{border:none;border-radius:999px;padding:10px 22px;font-weight:800;font-size:14px;cursor:pointer;min-width:84px;border:2px solid #000}
+.lang-btn.active{background:#000;color:#fff}.lang-btn.inactive{background:#fff;color:#000}
+.top-status{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:0 4px}
+.live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:#16a34a;background:#f0fdf4;border:1px solid #bbf7d0;padding:6px 12px;border-radius:999px}
+.dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 1.5s infinite}@keyframes blink{50%{opacity:0.3}}
+.time{font-size:10px;color:#64748b;font-family:monospace;font-weight:700}
+.refresh-icon{width:32px;height:32px;border-radius:50%;background:#f8fafc;border:2px solid #000;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.icon-wrap{width:92px;height:92px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:6px auto 14px;font-size:42px}
+h1{text-align:center;font-size:22px;font-weight:800;margin-bottom:5px}.sub{text-align:center;font-size:11px;font-weight:600;margin-bottom:14px;color:#94a3b8}
+.card{border:2px solid #000;border-radius:20px;padding:14px;background:#f8fafc;margin-bottom:12px}
+.coord{font-family:monospace;font-weight:700;font-size:14px}
+.pill{margin-top:10px;border-radius:14px;padding:12px 14px;text-align:center;font-weight:700;font-size:12.5px;border:2px solid #000;width:100%;min-height:46px;display:flex;align-items:center;justify-content:center}
+.pill-yellow{background:#fef08a}.pill-green{background:#bbf7d0;border-color:#16a34a;color:#14532d}.pill-red{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.pill-big{text-align:center;font-weight:800;padding:13px;border-radius:18px;border:2px solid #000;min-height:52px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.pill-big-green{background:#dcfce7;border-color:#16a34a;color:#14532d}.pill-big-yellow{background:#fef9c3}.pill-big-red{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.meta{font-family:monospace;font-size:11px;font-weight:600;margin-top:8px;color:#475569}
+.btn{width:100%;border:none;border-radius:16px;padding:15px;font-weight:800;font-size:14px;margin-top:14px;cursor:pointer}
+.btn-black{background:#000;color:#fff}.btn-yellow{background:#facc15;color:#000;border:2px solid #000}.btn-white{background:#fff;color:#000;border:2px solid #000}
+.btn-blocked{background:#fee2e2;color:#7f1d1d;border:2px solid #dc2626;pointer-events:none;opacity:0.6}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<div class="phone">
-<div class="header"><div class="live"><b>🔴</b> Live #<span id="liveNum">283</span></div><div id="time">02:33:00</div><div style="width:32px;height:32px;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="location.reload()">↻</div></div>
-
-<!-- S1 -->
-<div id="s1" class="screen">
-<div class="center">
-<div style="width:50px;height:50px;background:#fff7ed;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;">⚠️</div>
-<h1 id="s1title">SAMA Security Notice</h1>
-<div class="sub">v65 Final Secure - Dynamic</div>
-<div class="whiteCard">
-<div class="coord">📍 <span id="c1">24.672545, 46.712863</span></div>
-<div id="city1" class="yellowPill" style="margin:10px 0;">🌍 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
-<div class="small">Accuracy: <span id="acc1">12m</span> - Alt: 594.1m</div>
-<div id="fake1" class="greenPill">✅ Fake GPS OFF - Real GPS - OK</div>
-<div id="safe1" class="greenPill" style="margin-top:8px;">Within KSA - Safe - Access Granted ✅</div>
+<div class="app">
+<div class="lang-switch">
+<button class="lang-btn inactive" id="btnAr" onclick="setLang('ar')">العربية</button>
+<button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
 </div>
-<button class="btn btnBlack" id="p1btn" onclick="go2()">→ Proceed to Secure Login</button>
-</div>
+<div class="top-status">
+<div class="live"><span class="dot" id="dot"></span><span id="liveTxt">Live</span> <span id="countTxt">#26</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span class="time" id="lastUpdate">02:17:08</span><div class="refresh-icon" onclick="forceRefresh()">↻</div></div>
 </div>
 
-<!-- S2 -->
-<div id="s2" class="screen hidden">
-<div class="center">
-<div class="bag">🏦</div>
-<h1 id="s2title">SAB - Saudi First Bank</h1>
-<div class="sub" id="s2sub">Secure Login</div>
-<div class="whiteCard">
-<div class="coord">📍 <span id="c2">24.672545, 46.712863</span></div>
-<div id="city2" style="margin:8px 0; font-weight:700; font-size:13px;">🌍 Riyadh - Within KSA</div>
-<div class="small">Accuracy: <span id="acc2">12m</span> - Alt: 594.1m</div>
-<div id="fake2" class="greenPill">✅ Real GPS</div>
-<div id="status2" class="greenPill" style="margin-top:8px;">✅ Within KSA - Safe</div>
+<!-- SCREEN 1 -->
+<div id="s1">
+<div class="icon-wrap" id="icon1">⚠️</div>
+<h1 id="h1_t1">SAMA Security Notice</h1>
+<p class="sub" id="h1_sub">v65.1 FINAL SECURE - SAME DESIGN</p>
+<div class="card">
+<div class="coord">📍 <span id="c1">24.672543, 46.712856</span></div>
+<div class="pill pill-yellow" id="city1">🇸🇦 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+<div class="meta" id="acc1">Accuracy: 9m - Alt: 594.1m</div>
+<div class="pill pill-green" id="f1">Fake GPS OFF - Real GPS - OK ✅</div>
 </div>
-<button class="btn btnBlack" id="verifyBtn" onclick="go3()">Verify →</button>
-<button class="btn btnWhite" onclick="go1()">Back</button>
-</div>
+<div class="pill-big pill-big-green" id="st1">Within KSA - Safe - Dynamic: Riyadh, Riyadh Region ✅</div>
+<button class="btn btn-black" id="b1" onclick="go2()">→ Proceed to Secure Login</button>
 </div>
 
-<!-- S3 -->
-<div id="s3" class="screen hidden">
-<div class="center">
-<div class="bag">💰</div>
-<h1>Account Verified</h1>
-<div class="sub">SAB - Saudi First Bank - Dashboard</div>
-<div class="blackCard">
-<div class="lbl">Available Balance</div>
-<div class="bal" id="balText">SAR 125,450.00</div>
-<div id="city3" class="yellowPill">🌍 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+<!-- SCREEN 2 -->
+<div id="s2" class="hidden">
+<div class="icon-wrap" style="width:60px;height:60px;font-size:26px">🏦</div>
+<h1 id="h2_t1">SAB - Saudi First Bank</h1>
+<p class="sub" id="h2_sub">Secure Login - OTP Verification</p>
+<div class="card">
+<div class="coord">📍 <span id="c2">24.672543, 46.712856</span></div>
+<div class="pill pill-yellow" id="city2">🇸🇦 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+<div class="meta" id="acc2">Accuracy: 9m - Alt: 594.1m</div>
+<div class="pill pill-green" id="f2">Fake GPS OFF - Real GPS - OK ✅</div>
 </div>
-<div class="whiteCard">
-<div class="coord">📍 <span id="c3">24.672545, 46.712863</span></div>
-<div class="small">Accuracy: <span id="acc3">12m</span> - Alt: 594.1m</div>
-<div id="fake3" class="greenPill">Fake GPS OFF - Real GPS - OK ✅</div>
+<div class="pill-big pill-big-green" id="st2">Within KSA - Safe - Dynamic: Riyadh, Riyadh Region ✅</div>
+<button class="btn btn-black" id="b2" onclick="go3()">Verify</button>
+<button class="btn btn-white" id="b2_back" onclick="go1()">Back</button>
 </div>
-<div id="block3" class="redPill hidden" style="margin-bottom:12px;">🚫 HIGH R
+
+<!-- SCREEN 3 -->
+<div id="s3" class="hidden">
+<div class="icon-wrap" style="width:60px;height:60px;font-size:26px">💰</div>
+<h1 id="h3_t1">Account Verified</h1>
+<p class="sub" id="h3_sub">SAB - Saudi First Bank - Dashboard</p>
+<div style="background:#000;color:#fff;border-radius:20px;padding:18px;text-align:center;margin-bottom:12px">
+<div style="font-size:12px;opacity:0.8" id="h3_bal">Available Balance</div>
+<h2 style="font-size:24px;margin-top:4px;font-weight:800" id="balValue">SAR 125,450.00</h2>
+<div class="pill pill-yellow" id="city3" style="margin-top:12px;background:#fef08a;color:#000;font-size:12px">🇸🇦 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+</div>
+<div class="card">
+<div class="coord">📍 <span id="c3">24.672543, 46.712856</span></div>
+<div class="meta" id="acc3">Accuracy: 9m - Alt: 594.1m</div>
+<div class="pill pill-green" id="f3">Fake GPS OFF - Real GPS - OK ✅</div>
+</div>
+<div class="pill-big pill-big-green" id="st3">Within KSA - Safe - Access Granted ✅</div>
+<button class="btn btn-black" id="b3_transfer">Transfer Now →</button>
+<button class="btn btn-white" id="b3_logout" onclick="go1()">Logout</button>
+</div>
+
+</div>
+<script>
+let coords={lat:24.672543,lon:46.712856,acc:9,alt:594.1},lang='en',cacheEN={},cacheAR={},dyn={display:"🇸🇦 Riyadh, Riyadh Region, Saudi Arabia - Within KSA",full:"Riyadh, Riyadh Region",city:"Riyadh"},refreshCount=26,watchId=null,pollId=null;
+
+const T={
+en:{live:"Live",sama:"SAMA Security Notice",sab:"SAB - Saudi First Bank",dash:"Account Verified",sub:"v65.1 FINAL SECURE - SAME DESIGN",sub2:"Secure Login - OTP Verification",sub3:"SAB - Saudi First Bank - Dashboard",bal:"Available Balance",within:"Within KSA",outside:"Outside KSA - Risk 960",fakeOff:"Fake GPS OFF - Real GPS - OK ✅",fakeOn:"🚨 Fake GPS ON - HIGH RISK",safe:"Within KSA - Safe - Dynamic:",safe3:"Within KSA - Safe - Access Granted",warn:"⚠️ Warning: Fake GPS ON - Risk 960",block:"🚫 HIGH RISK - BLOCKED - Risk 960",proceed:"→ Proceed to Secure Login",warnBtn:"⚠️ Warning - Proceed →",verify:"Verify",back:"Back",transfer:"Transfer Now →",logout:"Logout",blockedBal:"🚫 BLOCKED - Risk 960"},
+ar:{live:"مباشر",sama:"إشعار أمان ساما",sab:"البنك السعودي الأول",dash:"تم التحقق من الحساب",sub:"v65.1 آمن نهائي - نفس التصميم",sub2:"تسجيل دخول آمن",sub3:"البنك السعودي الأول - لوحة التحكم",bal:"الرصيد المتاح",within:"داخل السعودية",outside:"خارج السعودية - مخاطر 960",fakeOff:"نظام وهمي متوقف - OK ✅",fakeOn:"🚨 نظام وهمي - مخاطر عالية",safe:"داخل السعودية - آمن - ديناميكي:",safe3:"داخل السعودية - آمن - تم السماح",warn:"⚠️ تحذير: وهمي - مخاطر 960",block:"🚫 مخاطر عالية - محظور",proceed:"→ المتابعة إلى تسجيل الدخول الآمن",warnBtn:"⚠️ تحذير - المتابعة →",verify:"تحقق",back:"رجوع",transfer:"تحويل الآن →",logout:"تسجيل خروج",blockedBal:"🚫 محظور - مخاطر 960"}
+};
+
+function setLang(l){
+lang=l;
+document.documentElement.lang=l;
+document.getElementById('btnEn').className=l==='en'?"lang-btn active":"lang-btn inactive";
+document.getElementById('btnAr').className=l==='ar'?"lang-btn active":"lang-btn inactive";
+fetchCity(coords.lat,coords.lon,true);
+updateUI();
+}
+function isInKSA(lat,lon){return lat>=16&&lat<=33&&lon>=34&&lon<=56;}
+function getFlag(c){c=(c||"").toLowerCase();if(c.includes("saudi")||c.includes("السعودية"))return"🇸🇦";if(c.includes("india"))return"🇮🇳";return"🌍";}
+async function fetchCity(lat,lon,force=false){
+let key=lat.toFixed(3)+","+lon.toFixed(3);
+let cache=lang==='en'?cacheEN:cacheAR;
+if(!force && cache[key]){dyn=cache[key];updateUI();return;}
+let t=T[lang];
+let outside=!isInKSA(lat,lon);
+dyn={display:outside?`🌍 ${lat.toFixed(4)}, ${lon.toFixed(4)} - ${t.outside}`:`🇸🇦 ${lat.toFixed(4)}, ${lon.toFixed(4)} - ${t.within}`,full:"Loading...",city:"Loading..."};
+let url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=12&accept-language=${lang==='en'?'en':'ar'}`;
+try{let r=await fetch(url);let d=await r.json();if(d.address){let city=d.address.village||d.address.town||d.address.city||d.address.county||"";let state=d.address.state||"";let country=d.address.country||"";let full=city;if(state&&city!==state) full=`${city}, ${state}`;let flag=getFlag(country);let out=!isInKSA(lat,lon);let display=out?`${flag} ${full}, ${country} - ${t.outside}`:`${flag} ${full}, ${country} - ${t.within}`;let obj={city:city,full:full,display:display};cache[key]=obj;dyn=obj;updateUI();}}catch(e){}
+}
+function updateUI(){
+let t=T[lang],out=!isInKSA(coords.lat,coords.lon),fakeOn=out||coords.acc===0;if(!out&&coords.acc>0&&coords.acc<200) fakeOn=false;if(coords.acc===0) fakeOn=true;
+document.getElementById('liveTxt').innerText=t.live;
+document.getElementById('countTxt').innerText=`#${refreshCount}`;
+document.getElementById('h1_t1').innerText=t.sama;document.getElementById('h1_sub').innerText=t.sub;
+document.getElementById('h2_t1').innerText=t.sab;document.getElementById('h2_sub').innerText=t.sub2;
+document.getElementById('h3_t1').innerText=t.dash;document.getElementById('h3_sub').innerText=t.sub3;document.getElementById('h3_bal').innerText=t.bal;
+let c=`${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;document.getElementById('c1').innerText=c;document.getElementById('c2').innerText=c;document.getElementById('c3').innerText=c;
+document.getElementById('city1').innerText=dyn.display;document.getElementById('city2').innerText=dyn.display;document.getElementById('city3').innerText=dyn.display;
+let a=lang==='ar'?`الدقة: ${coords.acc}م - الارتفاع: ${coords.alt}م`:`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m`;document.getElementById('acc1').innerText=a;document.getElementById('acc2').innerText=a;document.getElementById('acc3').innerText=a;
+document.getElementById('f1').innerText=fakeOn?t.fakeOn:t.fakeOff;document.getElementById('f2').innerText=document.getElementById('f1').innerText;document.getElementById('f3').innerText=document.getElementById('f1').innerText;
+document.getElementById('f1').className=fakeOn?"pill pill-red":"pill pill-green";document.getElementById('f2').className=fakeOn?"pill pill-red":"pill pill-green";document.getElementById('f3').className=fakeOn?"pill pill-red":"pill pill-green";
+document.getElementById('st1').innerText=fakeOn?t.warn:`${t.safe} ${dyn.full} ✅`;document.getElementById('st1').className=fakeOn?"pill-big pill-big-yellow":"pill-big pill-big-green";
+document.getElementById('st2').innerText=fakeOn?`${t.block}`:`${t.safe} ${dyn.full} ✅`;document.getElementById('st2').className=fakeOn?"pill-big pill-big-red":"pill-big pill-big-green";
+document.getElementById('st3').innerText=fakeOn?t.block:`${t.safe3} ✅`;document.getElementById('st3').className=fakeOn?"pill-big pill-big-red":"pill-big pill-big-green";
+document.getElementById('b1').innerText=fakeOn?t.warnBtn:t.proceed;document.getElementById('b2').innerText=fakeOn?t.block:t.verify;document.getElementById('b2').className=fakeOn?"btn btn-yellow":"btn btn-black";
+document.getElementById('b2_back').innerText=t.back;document.getElementById('b3_logout').innerText=t.logout;
+document.getElementById('lastUpdate').innerText=new Date().toLocaleTimeString().slice(0,8);
+document.getElementById('dot').style.background=fakeOn?"#dc2626":"#22c55e";
+
+// ===== v65.1 CRITICAL FIX - S3 GUARD =====
+let s3Visible =!document.getElementById('s3').classList.contains('hidden');
+if(fakeOn){
+// S3 pe hai to auto kick
+if(s3Visible){
+document.getElementById('balValue').innerText = t.blockedBal;
+document.getElementById('b3_transfer').innerText = t.block;
+document.getElementById('b3_transfer').className = "btn btn-blocked";
+document.getElementById('b3_transfer').disabled = true;
+// 1 sec baad S1 pe wapas
+setTimeout(()=>{
+if(!isInKSA(coords.lat,coords.lon) || coords.acc===0){
+alert(t.block+" - "+dyn.display);
+go1();
+}
+}, 800);
+} else {
+document.getElementById('b3_transfer').innerText = t.transfer;
+document.getElementById('b3_transfer').className = "btn btn-black";
+document.getElementById('b3_transfer').disabled = false;
+document.getElementById('balValue').innerText = "SAR 125,450.00";
+}
+} else {
+document.getElementById('b3_transfer').innerText = t.transfer;
+document.getElementById('b3_transfer').className = "btn btn-black";
+document.getElementById('b3_transfer').disabled = false;
+document.getElementById('balValue').innerText = "SAR 125,450.00";
+}
+}
+function go1(){document.getElementById('s1').classList.remove('hidden');document.getElementById('s2').classList.add('hidden');document.getElementById('s3').classList.add('hidden');}
+function go2(){document.getElementById('s1').classList.add('hidden');document.getElementById('s2').classList.remove('hidden');document.getElementById('s3').classList.add('hidden');}
+function go3(){
+// ===== v65.1 FINAL GUARD =====
+let out=!isInKSA(coords.lat,coords.lon);
+let fakeOn = out || coords.acc===0;
+if(fakeOn || out){
+alert(T[lang].block+" - "+dyn.display+" - Risk 960");
+return; // NO S3
+}
+document.getElementById('s1').classList.add('hidden');
+document.getElementById('s2').classList.add('hidden');
+document.getElementById('s3').classList.remove('hidden');
+}
+function setLocation(lat,lon,acc,alt){coords={lat,lon,acc,alt};refreshCount++;fetchCity(lat,lon);updateUI();}
+function forceRefresh(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{setLocation(p.coords.latitude,p.coords.longitude,Math.round(p.coords.accuracy||0),(p.coords.altitude||594.1).toFixed(1));},{},{enableHighAccuracy:true,timeout:8000,maximumAge:0});}}
+function startAuto(){if(navigator.geolocation){watchId=navigator.geolocation.watchPosition(p=>{setLocation(p.coords.latitude,p.coords.longitude,Math.round(p.coords.accuracy||0),(p.coords.altitude||594.1).toFixed(1));},null,{enableHighAccuracy:true,maximumAge:0});}pollId=setInterval(()=>{forceRefresh();},1500);}
+if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{setLocation(p.coords.latitude,p.coords.longitude,Math.round(p.coords.accuracy||0),(p.coords.altitude||594.1).toFixed(1));startAuto();},()=>{startAuto();},{enableHighAccuracy:true});}else{startAuto();}
+setLang('en');
+
+// TEST HELPERS - Console me testFake() likho
+window.testFake = ()=>{ setLocation(6.749944,4.121922,0,594.1); }
+window.testReal = ()=>{ setLocation(24.672543,46.712856,9,594.1); }
+</script>
+</body>
+</html>
