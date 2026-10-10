@@ -1,120 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAB Secure - v65 Final Secure</title>
 <style>
-.blocked { background:#ffcccc; color:#990000; border:2px solid red; }
-.disabled { pointer-events:none; opacity:0.4; }
+*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, sans-serif;}
+body{background:#0f172a; display:flex; justify-content:center; min-height:100vh;}
+.phone{width:390px; background:#fff; min-height:100vh; position:relative; border-radius:24px; overflow:hidden; margin:10px;}
+.header{display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid #eee;}
+.live{padding:6px 14px; background:#ecfdf5; border:1px solid #bbf7d0; border-radius:20px; font-size:13px; font-weight:700; color:#059669;}
+.live b{color:#dc2626; margin-right:6px;}
+.screen{padding:20px;}
+.center{text-align:center;}
+.bag{width:80px;height:80px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin:10px auto 16px;}
+h1{font-size:26px;font-weight:800;margin-bottom:6px;}
+.sub{color:#94a3b8;font-size:13px;margin-bottom:18px;}
+.blackCard{background:#0f0f0f;color:#fff;border-radius:22px;padding:22px;text-align:center;margin-bottom:16px;}
+.blackCard .lbl{font-size:14px;opacity:0.8;margin-bottom:6px;}
+.blackCard .bal{font-size:32px;font-weight:800;margin-bottom:14px;}
+.yellowPill{background:#fef08a;color:#000;padding:12px;border-radius:14px;font-weight:700;font-size:13px;line-height:1.3;}
+.whiteCard{border:2px solid #000;border-radius:20px;padding:14px;margin-bottom:12px;}
+.coord{font-weight:800;font-size:18px;margin-bottom:4px;}
+.small{font-size:13px;color:#64748b;margin-bottom:10px;}
+.redPill{background:#ffe2e2;color:#991b1b;border:2px solid #dc2626;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:14px;}
+.greenPill{background:#dcfce7;color:#166534;border:1px solid #16a34a;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:14px;}
+.btn{width:100%;padding:16px;border-radius:16px;font-weight:800;font-size:15px;cursor:pointer;border:none;margin-bottom:10px;}
+.btnBlack{background:#000;color:#fff;}
+.btnWhite{background:#fff;color:#000;border:2px solid #000;}
+.btnBlocked{background:#ffe2e2;color:#991b1b;border:2px solid #dc2626;}
+.hidden{display:none;}
 </style>
 </head>
 <body>
+<div class="phone">
+<div class="header"><div class="live"><b>🔴</b> Live #<span id="liveNum">283</span></div><div id="time">02:33:00</div><div style="width:32px;height:32px;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="location.reload()">↻</div></div>
 
-<script>
-// ===== v65 GLOBAL SECURITY GUARD =====
-let lastLat = 0, lastLon = 0, lastAcc = 999, isFake = false, isInsideKSA = false;
-let riskScore = 0;
-let currentCity = "";
-
-function checkSecurity(lat, lon, acc) {
-  lastLat = lat; lastLon = lon; lastAcc = acc;
-  
-  // Fake detection
-  isFake = (acc === 0 || acc < 3); // 0m = 100% fake
-  
-  // KSA Bounding Box: 16-33 lat, 34-56 lon
-  isInsideKSA = (lat >= 16 && lat <= 33 && lon >= 34 && lon <= 56 && !isFake && acc > 3);
-  
-  // Risk
-  riskScore = isInsideKSA ? 0 : 960;
-  
-  return { isFake, isInsideKSA, riskScore };
-}
-
-// ===== S1 → S2 Guard =====
-function goToS2() {
-  const sec = checkSecurity(lastLat, lastLon, lastAcc);
-  
-  if (!sec.isInsideKSA || sec.isFake || sec.riskScore == 960) {
-    // Fake pe bhi S2 dikhao lekin blocked state me
-    showS2Blocked();
-    return;
-  }
-  showS2Normal();
-}
-
-// ===== S2 → S3 CRITICAL GUARD - v65 FIX =====
-function go3() {
-  const sec = checkSecurity(lastLat, lastLon, lastAcc);
-  
-  // 🔴 FINAL BLOCK - Dashboard pe jaane se pehle
-  if (!sec.isInsideKSA || sec.isFake || sec.riskScore == 960 || lastAcc == 0) {
-    alert("🚫 HIGH RISK - BLOCKED - Risk 960 - 🌍 " + currentCity + " - Outside KSA - Risk 960");
-    // Dashboard mat kholo, wapis S1 pe
-    location.reload();
-    return false;
-  }
-  
-  // 🟢 Only Riyadh allowed
-  showS3Secure();
-}
-
-function showS3Secure() {
-  const sec = checkSecurity(lastLat, lastLon, lastAcc);
-  
-  // Double check inside S3 also - Agar bypass karke aaya to
-  if (!sec.isInsideKSA || sec.isFake) {
-    document.body.innerHTML = `
-      <div style="padding:20px; text-align:center; margin-top:100px;">
-        <h1 style="color:red;">🚫 HIGH RISK - BLOCKED</h1>
-        <p>🌍 ${currentCity} - Outside KSA - Risk 960</p>
-        <p>📍 ${lastLat}, ${lastLon}</p>
-        <p>Accuracy: ${lastAcc}m - Fake GPS ON</p>
-        <button onclick="location.reload()" style="padding:15px 30px; background:black; color:white; border-radius:10px;">Back to Safety Check</button>
-      </div>
-    `;
-    return;
-  }
-  
-  // Normal Dashboard - Only for Riyadh
-  document.getElementById('s3').innerHTML = `
-    <div>Account Verified</div>
-    <div>SAR 125,450.00</div>
-    <div>🇸🇦 Riyadh, Within KSA - Safe</div>
-    <button>Transfer Now →</button>
-  `;
-}
-
-function showS2Blocked() {
-  // S2 pe blocked UI
-  document.getElementById('verifyBtn').innerHTML = "🚫 HIGH RISK - BLOCKED - Risk 960";
-  document.getElementById('verifyBtn').style.background = "#ffcccc";
-  document.getElementById('verifyBtn').style.color = "#990000";
-  document.getElementById('verifyBtn').onclick = function() {
-    alert("🚫 HIGH RISK - BLOCKED - Risk 960 - 🌍 " + currentCity + " - Outside KSA - Risk 960");
-  };
-}
-
-// GPS Update with live check
-function onGPSUpdate(lat, lon, acc, city) {
-  currentCity = city;
-  const sec = checkSecurity(lat, lon, acc);
-  
-  // Agar already S3 pe hai aur fake on hua to auto kick
-  if (document.getElementById('s3').style.display != 'none') {
-    if (!sec.isInsideKSA) {
-      alert("🚨 Location changed to Outside KSA - Session Blocked - Risk 960");
-      location.reload();
-    }
-  }
-}
-</script>
-
-<!-- SCREENS -->
-<div id="s1">S1 SAMA Notice - Live #</div>
-<div id="s2" style="display:none;">
-  <button id="verifyBtn" onclick="go3()">Verify</button>
+<!-- S1 -->
+<div id="s1" class="screen">
+<div class="center">
+<div style="width:50px;height:50px;background:#fff7ed;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;">⚠️</div>
+<h1 id="s1title">SAMA Security Notice</h1>
+<div class="sub">v65 Final Secure - Dynamic</div>
+<div class="whiteCard">
+<div class="coord">📍 <span id="c1">24.672545, 46.712863</span></div>
+<div id="city1" class="yellowPill" style="margin:10px 0;">🌍 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+<div class="small">Accuracy: <span id="acc1">12m</span> - Alt: 594.1m</div>
+<div id="fake1" class="greenPill">✅ Fake GPS OFF - Real GPS - OK</div>
+<div id="safe1" class="greenPill" style="margin-top:8px;">Within KSA - Safe - Access Granted ✅</div>
 </div>
-<div id="s3" style="display:none;">Account Verified SAR 125,450</div>
+<button class="btn btnBlack" id="p1btn" onclick="go2()">→ Proceed to Secure Login</button>
+</div>
+</div>
 
-</body>
-</html>
+<!-- S2 -->
+<div id="s2" class="screen hidden">
+<div class="center">
+<div class="bag">🏦</div>
+<h1 id="s2title">SAB - Saudi First Bank</h1>
+<div class="sub" id="s2sub">Secure Login</div>
+<div class="whiteCard">
+<div class="coord">📍 <span id="c2">24.672545, 46.712863</span></div>
+<div id="city2" style="margin:8px 0; font-weight:700; font-size:13px;">🌍 Riyadh - Within KSA</div>
+<div class="small">Accuracy: <span id="acc2">12m</span> - Alt: 594.1m</div>
+<div id="fake2" class="greenPill">✅ Real GPS</div>
+<div id="status2" class="greenPill" style="margin-top:8px;">✅ Within KSA - Safe</div>
+</div>
+<button class="btn btnBlack" id="verifyBtn" onclick="go3()">Verify →</button>
+<button class="btn btnWhite" onclick="go1()">Back</button>
+</div>
+</div>
+
+<!-- S3 -->
+<div id="s3" class="screen hidden">
+<div class="center">
+<div class="bag">💰</div>
+<h1>Account Verified</h1>
+<div class="sub">SAB - Saudi First Bank - Dashboard</div>
+<div class="blackCard">
+<div class="lbl">Available Balance</div>
+<div class="bal" id="balText">SAR 125,450.00</div>
+<div id="city3" class="yellowPill">🌍 Riyadh, Riyadh Region, Saudi Arabia - Within KSA</div>
+</div>
+<div class="whiteCard">
+<div class="coord">📍 <span id="c3">24.672545, 46.712863</span></div>
+<div class="small">Accuracy: <span id="acc3">12m</span> - Alt: 594.1m</div>
+<div id="fake3" class="greenPill">Fake GPS OFF - Real GPS - OK ✅</div>
+</div>
+<div id="block3" class="redPill hidden" style="margin-bottom:12px;">🚫 HIGH R
