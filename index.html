@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>SAB Secure</title>
 <link rel="manifest" href="manifest.json">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{background:#0f172a}
+  /* NO-SHAKE FIX */
+  #status{min-height:84px; display:flex; align-items:center; justify-content:center; text-align:center;}
+  #location{min-height:28px}
+  #countryBox{min-height:38px; display:flex; align-items:center; justify-content:center;}
+  #accText{min-height:20px}
+</style>
 </head>
 <body class="bg-[#0f172a] min-h-screen flex justify-center p-3">
 
 <div class="bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl overflow-hidden">
   <div class="flex justify-end gap-2 mb-3">
-    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-4 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
-    <button id="btnEn" onclick="setLang('en')" class="text-xs px-4 py-2 rounded-full bg-black text-white font-black">EN</button>
+    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-4 py-2 rounded-full bg-black text-white font-black">العربية</button>
+    <button id="btnEn" onclick="setLang('en')" class="text-xs px-4 py-2 rounded-full bg-gray-200 text-black font-black border">EN</button>
   </div>
 
   <div class="text-center mb-5">
@@ -24,15 +32,20 @@
 
   <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
     <div class="flex justify-between items-center">
-      <span id="liveTag" class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - 3s</span>
+      <span id="liveTag" class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - 5s</span>
       <span id="locLabel" class="text-[12px] font-black text-black">موقع المستخدم</span>
     </div>
     <p id="location" class="text-[18px] font-black text-black mt-3 font-mono text-center">24.672529, 46.712851</p>
+
+    <!-- NEW: COUNTRY NAME -->
+    <div id="countryBox" class="mt-2">
+      <p id="countryName" class="text-[13px] font-black text-black bg-yellow-200 border-2 border-black rounded-full px-4 py-1.5">📍 جاري الكشف عن الدولة...</p>
+    </div>
+
     <p id="accText" class="text-[12px] font-bold text-black mt-2 font-mono text-center">الدقة: 25m - Alt: 594.1m - 22:28:17</p>
     <div id="status" class="mt-3 text-[13px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 text-center leading-6">✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف</div>
   </div>
 
-  <!-- FIXED VERIFICATION - AB BAHAR NAHI JAYEGA -->
   <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
     <label class="text-[12px] font-black text-black block mb-2">VERIFICATION</label>
     <div class="grid grid-cols-[1fr_90px] gap-2 w-full">
@@ -46,22 +59,72 @@
 </div>
 
 <script>
-let currentLang='ar', lastLat=null, lastLon=null;
+let currentLang='ar', lastLat=null, lastLon=null, lastAcc=null, lastRender=0;
 const T={
  en:{title:"SAB - Saudi Awwal Bank",sub:"SAMA Compliant Location Verification",loc:"USER LOCATION",acc:"Accuracy",fetching:"Fetching...",clean:"✅ Inside KSA - SAMA Compliant - Risk 100 - Clean Location",mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED",safe:"✅ Safe follow-up - Allowed",block:"🚫 BLOCKED - Risk 960",sama:"Complies with SAMA CSF & NCA ECC-1:2018<br>Data stays inside KSA",verify:"Verify",otp:"Enter OTP"},
  ar:{title:"SAB - البنك السعودي الأول",sub:"التحقق من الموقع متوافق مع SAMA",loc:"موقع المستخدم",acc:"الدقة",fetching:"جاري التحميل...",clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف",mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور",safe:"✅ متابعة آمنة - مسموح",block:"🚫 محظور - خطر 960",sama:"متوافقة مع SAMA CSF و NCA ECC-1:2018<br>البيانات داخل المملكة",verify:"Verify",otp:"Enter OTP"}
 };
+
+// OFFLINE COUNTRY - SAMA SAFE - NO API
+function getCountry(lat,lon){
+  if(lat>=16 && lat<=33 && lon>=34 && lon<=56) return {en:"🇸🇦 Saudi Arabia", ar:"🇸🇦 المملكة العربية السعودية"};
+  if(lat>=4 && lat<=14 && lon>=2 && lon<=15) return {en:"🇳🇬 Nigeria / Cameroon - Outside KSA", ar:"🇳🇬 نيجيريا / الكاميرون - خارج المملكة"};
+  if(lat>=22 && lat<=26.5 && lon>=51 && lon<=55.5) return {en:"🇦🇪 UAE", ar:"🇦🇪 الإمارات"};
+  return {en:"🌍 Outside KSA", ar:"🌍 خارج المملكة"};
+}
+
 function setLang(l){
- currentLang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr';
+ currentLang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr'; document.documentElement.lang=l;
  document.getElementById('btnEn').className=l==='en'?"text-xs px-4 py-2 rounded-full bg-black text-white font-black":"text-xs px-4 py-2 rounded-full bg-gray-200 text-black font-black border";
  document.getElementById('btnAr').className=l==='ar'?"text-xs px-4 py-2 rounded-full bg-black text-white font-black":"text-xs px-4 py-2 rounded-full bg-gray-200 text-black font-black border";
  document.getElementById('title').innerText=T[l].title; document.getElementById('subTitle').innerText=T[l].sub; document.getElementById('locLabel').innerText=T[l].loc; document.getElementById('samaTxt').innerHTML=T[l].sama; document.getElementById('otp').placeholder=T[l].otp;
- if(window.lastData) render(window.lastData);
+ if(window.lastData) render(window.lastData,true);
 }
-function render(d){ window.lastData=d; document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6); document.getElementById('accText').innerText=(currentLang==='ar'?T.ar.acc:T.en.acc)+": "+Math.round(d.acc)+"m - Alt: "+(d.alt?d.alt.toFixed(1):"0")+"m - "+new Date().toLocaleTimeString(); let s=document.getElementById('status'), b=document.getElementById('mainBtn'); if(d.isBlocked){ s.innerText=T[currentLang].mock; s.className="mt-3 text-[13px] font-black p-3 rounded-xl bg-red-200 text-black border-2 border-red-700 text-center leading-6"; b.innerText=T[currentLang].block; } else { s.innerText=T[currentLang].clean; s.className="mt-3 text-[13px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 text-center leading-6"; b.innerText=T[currentLang].safe; } }
-function checkSAMA(pos){ let lat=pos.coords.latitude, lon=pos.coords.longitude, acc=pos.coords.accuracy, alt=pos.coords.altitude; let inSaudi=lat>16&&lat<32&&lon>34&&lon<56, isMock=false; if((alt===0||alt===null)&&acc<100) isMock=true; if(Number.isInteger(acc)&&acc<30) isMock=true; if(acc<=3) isMock=true; if(lastLat!==null){ if(Math.abs(lat-lastLat)>0.01||Math.abs(lon-lastLon)>0.01) isMock=true; } lastLat=lat; lastLon=lon; render({lat,lon,acc,alt,isMock,inSaudi,isBlocked:isMock||!inSaudi}); }
+
+function render(d,force=false){
+  window.lastData=d;
+  // NO-SHAKE: same location + 4 sec throttle
+  if(!force){
+    if(d.lat===lastLat && d.lon===lastLon && d.acc===lastAcc) return;
+    if(Date.now()-lastRender < 4000) return;
+  }
+  lastRender=Date.now(); lastLat=d.lat; lastLon=d.lon; lastAcc=d.acc;
+
+  document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
+
+  // COUNTRY UPDATE
+  let c=getCountry(d.lat,d.lon);
+  document.getElementById('countryName').innerText = currentLang==='ar'? c.ar : c.en;
+
+  document.getElementById('accText').innerText=(currentLang==='ar'?T.ar.acc:T.en.acc)+": "+Math.round(d.acc)+"m - Alt: "+(d.alt?d.alt.toFixed(1):"0")+"m - "+new Date().toLocaleTimeString();
+
+  let s=document.getElementById('status'), b=document.getElementById('mainBtn');
+  if(d.isBlocked){
+    s.innerText=T[currentLang].mock;
+    s.className="mt-3 text-[13px] font-black p-3 rounded-xl bg-red-200 text-black border-2 border-red-700 text-center leading-6";
+    b.innerText=T[currentLang].block;
+    b.className="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-[15px]";
+  } else {
+    s.innerText=T[currentLang].clean;
+    s.className="mt-3 text-[13px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 text-center leading-6";
+    b.innerText=T[currentLang].safe;
+    b.className="w-full bg-black text-white py-4 rounded-2xl font-black text-[15px]";
+  }
+}
+
+function checkSAMA(pos){
+  let lat=pos.coords.latitude, lon=pos.coords.longitude, acc=pos.coords.accuracy, alt=pos.coords.altitude;
+  let inSaudi=lat>16&&lat<32&&lon>34&&lon<56, isMock=false;
+  if((alt===0||alt===null)&&acc<100) isMock=true;
+  if(Number.isInteger(acc)&&acc<30) isMock=true;
+  if(acc<=3) isMock=true;
+  render({lat,lon,acc,alt,isMock,inSaudi,isBlocked:isMock||!inSaudi});
+}
 function verify(){ let otp=document.getElementById('otp').value; alert(otp.length==6?"✅ Verified":"Enter 6-digit OTP"); }
-(function(){ navigator.geolocation.watchPosition(checkSAMA, null, {enableHighAccuracy:true, maximumAge:0}); setInterval(()=>navigator.geolocation.getCurrentPosition(checkSAMA, null, {enableHighAccuracy:true}), 3000); })();
+
+// NO-SHAKE FIX: Sirf watchPosition - setInterval hata diya
+navigator.geolocation.watchPosition(checkSAMA, null, {enableHighAccuracy:true, maximumAge:5000, timeout:20000});
+setLang('ar');
 </script>
 </body>
 </html>
