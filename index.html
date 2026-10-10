@@ -1,59 +1,38 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAB Secure - SAMA Compliant</title>
-<link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body{background:#0f172a; font-family:'Tajawal',system-ui,sans-serif}
-  /* NO SHAKE LOCKS + LTR NUMBER FIX */
-  #location{height:32px; line-height:32px; overflow:hidden; white-space:nowrap; direction:ltr!important;}
-  #country{height:42px; display:flex; align-items:center; justify-content:center;}
-  #acc{height:24px; line-height:24px; overflow:hidden; direction:ltr!important;}
-  #status{height:92px; display:flex; align-items:center; justify-content:center; text-align:center;}
-</style>
-</head>
-<body class="bg-[#0f172a] min-h-screen flex justify-center p-3">
-<div class="bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl">
-  <div class="flex gap-2 mb-3">
-    <button id="btnEn" onclick="setLang('en')" class="text-xs px-5 py-2 rounded-full bg-black text-white font-black">EN</button>
-    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
-  </div>
-  <div class="text-center mb-5">
-    <div class="w-20 h-20 bg-black rounded-full mx-auto flex items-center justify-center text-4xl">📍</div>
-    <h1 id="title" class="text-[20px] font-black text-black mt-3">SAB - Saudi First Bank</h1>
-    <p id="sub" class="text-[12px] font-bold text-black">Verification of the site is compatible with SAMA.</p>
-    <span class="inline-block mt-2 bg-green-200 text-black text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA Active - Install Ready</span>
-  </div>
-  <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
-    <div class="flex justify-between items-center h-[26px]">
-      <span id="locLabel" class="text-[11px] font-black text-black">User site</span>
-      <span class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - 5s</span>
-    </div>
-    <p id="location" dir="ltr" class="text-[18px] font-black text-black mt-3 font-mono text-center">--</p>
-    <div class="flex justify-center mt-2"><p id="country" class="text-[13px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-1.5">📍 Detecting Country...</p></div>
-    <p id="acc" dir="ltr" class="text-[11px] font-bold text-black mt-2 font-mono text-center">---</p>
-    <div id="status" class="mt-3 text-[12px] font-black p-3 rounded-xl bg-gray-200 border-2">Checking...</div>
-  </div>
-  <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
-    <label id="verLabel" class="text-[11px] font-black text-black block mb-2">VERIFICATION</label>
-    <div dir="ltr" class="grid grid-cols-[1fr_90px] gap-2 w-full">
-      <input id="otp" placeholder="Enter OTP" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[14px] font-bold bg-white text-black">
-      <button onclick="verify()" id="vBtn" class="w-full bg-black text-white rounded-xl font-black text-[14px]">Verify</button>
-    </div>
-  </div>
-  <button id="mainBtn" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] h-[56px]">Checking...</button>
-</div>
 <script>
 let lang='en', lastLat=null, lastLon=null, lastRender=0, lastData=null;
 const T={
- en:{title:"SAB - Saudi First Bank", sub:"Verification of the site is compatible with SAMA.", loc:"User site", ver:"VERIFICATION", otp:"Enter OTP", btn:"Verify", acc:"Accuracy", clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site", mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED", safe:"✅ Safe follow-up - Allowed", block:"🚫 BLOCKED - Risk 960", cIn:"🇸🇦 Kingdom of Saudi Arabia", cOut:"🇳🇬 Nigeria - Outside KSA"},
- ar:{title:"SAB - البنك السعودي الأول", sub:"التحقق من الموقع متوافق مع SAMA", loc:"موقع المستخدم", ver:"التحقق", otp:"أدخل رمز التحقق", btn:"تحقق", acc:"الدقة", clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف", mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور", safe:"✅ متابعة آمنة - مسموح", block:"🚫 محظور - خطر 960", cIn:"🇸🇦 المملكة العربية السعودية", cOut:"🇳🇬 نيجيريا - خارج المملكة"}
+ en:{title:"SAB - Saudi First Bank", sub:"Verification of the site is compatible with SAMA.", loc:"User site", ver:"VERIFICATION", otp:"Enter OTP", btn:"Verify", acc:"Accuracy", clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site", mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED", safe:"✅ Safe follow-up - Allowed", block:"🚫 BLOCKED - Risk 960"},
+ ar:{title:"SAB - البنك السعودي الأول", sub:"التحقق من الموقع متوافق مع SAMA", loc:"موقع المستخدم", ver:"التحقق", otp:"أدخل رمز التحقق", btn:"تحقق", acc:"الدقة", clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف", mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور", safe:"✅ متابعة آمنة - مسموح", block:"🚫 محظور - خطر 960"}
 };
-function getC(lat,lon){ if(lat>16&&lat<33&&lon>34&&lon<56) return lang==='ar'?T.ar.cIn:T.en.cIn; return lang==='ar'?T.ar.cOut:T.en.cOut; }
+
+// NEW - Sahi Country + City Detection
+function getCountryInfo(lat,lon){
+  // Saudi
+  if(lat>16 && lat<33 && lon>34 && lon<56){
+    return lang==='ar'? "🇸🇦 المملكة العربية السعودية" : "🇸🇦 Kingdom of Saudi Arabia";
+  }
+  // Cameroon - Bélabo area aapka 5.39,13.23
+  if(lat>=1.6 && lat<=13.2 && lon>=8.2 && lon<=16.5){
+    if(lat>=4.5 && lat<=6.5 && lon>=12.5 && lon<=14.5){
+      return lang==='ar'? "🇨🇲 بيلابو، الكاميرون - خارج المملكة" : "🇨🇲 Bélabo, Cameroon - Outside KSA";
+    }
+    return lang==='ar'? "🇨🇲 الكاميرون - خارج المملكة" : "🇨🇲 Cameroon - Outside KSA";
+  }
+  // Nigeria
+  if(lat>=4 && lat<=14 && lon>=2 && lon<=15){
+    return lang==='ar'? "🇳🇬 نيجيريا - خارج المملكة" : "🇳🇬 Nigeria - Outside KSA";
+  }
+  // Niger
+  if(lat>=11 && lat<=24 && lon>=0 && lon<=16){
+    return lang==='ar'? "🇳🇪 النيجر - خارج المملكة" : "🇳🇪 Niger - Outside KSA";
+  }
+  // Chad
+  if(lat>=7 && lat<=24 && lon>=13 && lon<=24){
+    return lang==='ar'? "🇹🇩 تشاد - خارج المملكة" : "🇹🇩 Chad - Outside KSA";
+  }
+  // Egypt, etc fallback
+  return lang==='ar'? `🌍 خارج المملكة - ${lat.toFixed(2)}, ${lon.toFixed(2)}` : `🌍 Outside KSA - ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+}
 function setLang(l){
   lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr'; document.documentElement.lang=l;
   document.getElementById('btnEn').className=l==='en'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border";
@@ -69,8 +48,10 @@ function render(d,force=false){
   }
   lastRender=Date.now(); lastLat=d.lat; lastLon=d.lon;
   document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
-  document.getElementById('country').innerText=getC(d.lat,d.lon);
-  document.getElementById('acc').innerText=T[lang].acc+": "+Math.round(d.acc)+"m - Alt: "+(d.alt!==null?d.alt.toFixed(1):"0")+"m";
+  document.getElementById('country').innerText=getCountryInfo(d.lat,d.lon);
+  let accEl=document.getElementById('acc');
+  accEl.dir=lang==='ar'?'rtl':'ltr';
+  accEl.innerText=lang==='ar'?`الدقة: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`:`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`;
   let s=document.getElementById('status'), b=document.getElementById('mainBtn');
   if(d.block){ s.innerText=T[lang].mock; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-red-200 text-black border-2 border-red-700 flex items-center justify-center text-center leading-6"; b.innerText=T[lang].block; b.className="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
   else{ s.innerText=T[lang].clean; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 flex items-center justify-center text-center leading-6"; b.innerText=T[lang].safe; b.className="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
@@ -86,5 +67,3 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 navigator.geolocation.watchPosition(check,e=>{document.getElementById('status').innerText="Enable Location";},{enableHighAccuracy:true,maximumAge:10000,timeout:20000});
 setLang('en');
 </script>
-</body>
-</html>
