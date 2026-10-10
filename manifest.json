@@ -1,1 +1,18 @@
-Code
+{
+  "name": "SAB Secure Location",
+  "short_name": "SAB Secure",
+  "description": "SAMA Compliant - SAB Secure Location Verification",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/484/484167.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
