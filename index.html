@@ -2,114 +2,166 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAB Secure - SAMA Compliant v22 SMART AUTO</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAB SAMA v25 - 3 Screen Bilingual</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body{background:#0f172a; font-family:'Tajawal',sans-serif}
-  #location{height:32px; line-height:32px; overflow:hidden; white-space:nowrap; direction:ltr!important; font-family:'JetBrains Mono',monospace}
-  #country{min-height:44px; display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.3; padding:6px 12px}
-  #acc{height:24px; line-height:24px; overflow:hidden; direction:ltr!important; font-family:'JetBrains Mono',monospace}
-  #status{height:92px; display:flex; align-items:center; justify-content:center; text-align:center}
-</style>
+<style>body{background:#0f172a; font-family:'Tajawal',sans-serif}.mono{font-family:'JetBrains Mono',monospace} #location,#acc,#preLoc,#preAcc{direction:ltr!important}</style>
 </head>
 <body class="bg-[#0f172a] min-h-screen flex justify-center p-3">
-<div class="bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl">
-  <div class="flex gap-2 mb-3">
-    <button id="btnEn" onclick="setLang('en')" class="text-xs px-5 py-2 rounded-full bg-black text-white font-black">EN</button>
-    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
+
+<!-- LANG TOGGLE -->
+<div class="fixed top-3 left-3 z-50 flex gap-2">
+  <button id="btnEn" onclick="setLang('en')" class="text-xs px-5 py-2 rounded-full bg-white text-black font-black border-2 border-black">EN</button>
+  <button id="btnAr" onclick="setLang('ar')" class="text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
+</div>
+
+<!-- SCREEN 1: PRE-LOGIN -->
+<div id="preLogin" class="bg-white rounded-[28px] w-full max-w-[390px] p-6 shadow-2xl mt-12">
+  <div class="text-center">
+    <div class="w-20 h-20 bg-yellow-400 rounded-full mx-auto flex items-center justify-center text-4xl">⚠️</div>
+    <h1 id="pTitle" class="text-[20px] font-black mt-3">SAMA Security Notice</h1>
+    <p id="pSub" class="text-[11px] font-bold">Verification compatible with SAMA</p>
   </div>
-  <div class="text-center mb-5">
+  <div class="bg-gray-100 rounded-2xl border-2 border-black p-4 mt-4">
+    <p id="preLoc" class="text-[12px] font-black mono">📍 Checking...</p>
+    <p id="preCountry" class="text-[11px] font-bold mt-1 bg-yellow-200 border border-black rounded-full px-3 py-1 inline-block">Detecting...</p>
+    <p id="preAcc" class="text-[10px] font-bold mt-2 mono">Accuracy: --</p>
+    <p id="fakeBadge" class="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-gray-300">Checking Fake GPS...</p>
+  </div>
+  <div class="bg-yellow-50 border-2 border-yellow-600 rounded-xl p-3 mt-4 text-[11px] font-black" id="pPoints">
+    <p>• Location will be verified for SAMA</p><p class="mt-1">• Outside KSA = BLOCKED Risk 960</p><p class="mt-1">• Fake GPS ON = Fraud - BLOCKED</p><p class="mt-1">• Fake GPS OFF + Within KSA = Allowed</p>
+  </div>
+  <div id="preStatus" class="mt-4 text-[12px] font-black p-3 rounded-xl bg-gray-200 border-2 text-center">Checking...</div>
+  <button id="proceedBtn" onclick="goLogin()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[13px] mt-5 hidden">Proceed to Secure Login →</button>
+  <button id="blockedBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-[13px] mt-5 hidden">🚫 BLOCKED</button>
+</div>
+
+<!-- SCREEN 2: LOGIN -->
+<div id="loginScreen" class="hidden bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl mt-12">
+  <div class="text-center mb-4">
     <div class="w-20 h-20 bg-black rounded-full mx-auto flex items-center justify-center text-4xl">📍</div>
-    <h1 id="title" class="text-[20px] font-black text-black mt-3">SAB - Saudi First Bank</h1>
-    <p id="sub" class="text-[12px] font-bold text-black">Verification of the site is compatible with SAMA.</p>
-    <span class="inline-block mt-2 bg-green-200 text-black text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA Active - v22 SMART AUTO</span>
+    <h1 id="lTitle" class="text-[20px] font-black mt-3">SAB - Saudi First Bank</h1>
+    <span class="inline-block mt-2 bg-green-200 text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA v25 Bilingual</span>
   </div>
-  <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
-    <div class="flex justify-between items-center h-[26px]">
-      <span id="locLabel" class="text-[11px] font-black text-black">User site</span>
-      <span class="text-[10px] bg-green-300 text-black px-3 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - SMART</span>
-    </div>
-    <p id="location" dir="ltr" class="text-[18px] font-black text-black mt-3 text-center">--.------, --.------</p>
-    <div class="flex justify-center mt-2"><p id="country" class="text-[12px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-2 max-w-full">📍 Detecting...</p></div>
-    <p id="acc" dir="ltr" class="text-[11px] font-bold text-black mt-2 text-center">Accuracy: --m - Alt: --m</p>
-    <div id="status" class="mt-3 text-[12px] font-black p-3 rounded-xl bg-gray-200 text-black border-2 border-gray-400">Checking location...</div>
+  <div class="bg-gray-100 rounded-2xl border-2 p-4 mb-4">
+    <p id="location" class="text-[16px] font-black mono text-center">--.------</p>
+    <div class="flex justify-center mt-2"><p id="country" class="text-[11px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-2">Detecting...</p></div>
+    <p id="acc" class="text-[11px] font-bold mt-2 text-center mono">Accuracy: --</p>
+    <p id="fakeBadge2" class="text-[10px] font-black mt-2 text-center px-3 py-1 rounded-full bg-gray-300 inline-block w-full">Fake GPS Check...</p>
+    <div id="status" class="mt-3 text-[11px] font-black p-3 rounded-xl bg-gray-200 border-2 text-center">Checking...</div>
   </div>
-  <div class="bg-gray-100 rounded-2xl border-2 border-gray-300 p-4 mb-4">
-    <label id="verLabel" class="text-[11px] font-black text-black block mb-2">VERIFICATION</label>
-    <div dir="ltr" class="grid grid-cols-[1fr_90px] gap-2 w-full">
-      <input id="otp" placeholder="Enter OTP" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[14px] font-bold bg-white text-black outline-none">
-      <button id="vBtn" onclick="verify()" class="w-full bg-black text-white rounded-xl font-black text-[14px] h-[48px]">Verify</button>
+  <div class="bg-gray-100 rounded-2xl border-2 p-4 mb-4">
+    <label id="verLabel" class="text-[11px] font-black block mb-2">VERIFICATION - OTP</label>
+    <div class="grid grid-cols-[1fr_90px] gap-2">
+      <input id="otp" placeholder="123456" class="border-2 border-black rounded-xl px-3 py-3 text-[14px] font-bold outline-none">
+      <button id="vBtn" onclick="verifyAndGoDashboard()" class="bg-black text-white rounded-xl font-black text-[13px]">Verify</button>
     </div>
   </div>
-  <button id="mainBtn" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] h-[56px]">Checking...</button>
+  <button id="mainBtn" class="w-full bg-black text-white py-4 rounded-2xl font-black">Checking...</button>
+</div>
+
+<!-- SCREEN 3: DASHBOARD TRANSFER -->
+<div id="dashboard" class="hidden bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl mt-12">
+  <div class="flex justify-between items-center mb-4">
+    <h1 id="dTitle" class="text-[18px] font-black">💳 Dashboard</h1>
+    <span id="dSafe" class="text-[10px] bg-green-200 px-3 py-1 rounded-full font-black border border-green-700">Within KSA - Safe</span>
+  </div>
+  <div class="bg-black text-white rounded-2xl p-4 mb-4">
+    <p id="balLabel" class="text-[11px] opacity-70">Available Balance</p>
+    <p class="text-[26px] font-black mono">SAR 125,450.00</p>
+    <p id="dashLoc" class="text-[10px] font-bold mono mt-2">📍 Checking...</p>
+  </div>
+  <div class="bg-gray-100 rounded-2xl border-2 p-4">
+    <h2 id="tTitle" class="text-[14px] font-black mb-3">Transfer / Payment</h2>
+    <label id="fromL" class="text-[10px] font-black">From Account</label>
+    <select class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1 bg-white"><option>Savings - ****4582</option></select>
+    <label id="toL" class="text-[10px] font-black mt-3 block">To Beneficiary</label>
+    <input id="ben" placeholder="IBAN" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1">
+    <label id="amtL" class="text-[10px] font-black mt-3 block">Amount (SAR)</label>
+    <input id="amt" type="number" placeholder="0.00" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[14px] font-black mono mt-1">
+    <button id="transferBtn" onclick="doTransfer()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] mt-4">Transfer Now →</button>
+    <button id="logoutBtn" onclick="logout()" class="w-full bg-white border-2 border-black py-3 rounded-2xl font-black text-[12px] mt-2">Logout</button>
+  </div>
 </div>
 
 <script>
-let lang='en', lastLat=null, lastLon=null, lockedPlace=null, watchId=null;
+let lang='en', lastLat=null, lastLon=null, isBlocked=false, currentData=null;
 const T={
- en:{title:"SAB - Saudi First Bank", sub:"Verification of the site is compatible with SAMA.", loc:"User site", ver:"VERIFICATION", otp:"Enter OTP", btn:"Verify", clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site", mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED", safe:"✅ Safe follow-up - Allowed", block:"🚫 BLOCKED - Risk 960"},
- ar:{title:"SAB - البنك السعودي الأول", sub:"التحقق من الموقع متوافق مع SAMA", loc:"موقع المستخدم", ver:"التحقق", otp:"أدخل رمز التحقق", btn:"تحقق", clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف", mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور", safe:"✅ متابعة آمنة - مسموح", block:"🚫 محظور - خطر 960"}
+ en:{
+  pTitle:"SAMA Security Notice", pSub:"Verification compatible with SAMA", points:"• Location will be verified for SAMA<br>• Outside KSA = BLOCKED Risk 960<br>• Fake GPS ON = Fraud - BLOCKED<br>• Fake GPS OFF + Within KSA = Allowed",
+  cleanPre:"✅ Within KSA - Safe - Compliant with SAMA", mockPre:"⚠️ Fake GPS ON Detected - Outside KSA - Risk 960 - BLOCKED", safePre:"Fake GPS OFF - Real Location - Within KSA",
+  fakeOn:"🚨 Fake GPS ON - Mock - Accuracy 0m - BLOCKED", fakeOff:"✅ Fake GPS OFF - Real GPS - Accuracy OK",
+  clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site", mock:"⚠️ Fake Location Detected - Risk 960 - BLOCKED",
+  safe:"✅ Safe follow-up - Allowed", block:"🚫 BLOCKED - Risk 960", proceed:"Proceed to Secure Login →", blocked:"🚫 Access BLOCKED - Outside KSA / Fake GPS ON",
+  lTitle:"SAB - Saudi First Bank", ver:"VERIFICATION - OTP", vBtn:"Verify", dTitle:"💳 Dashboard", bal:"Available Balance", from:"From Account", to:"To Beneficiary", amt:"Amount (SAR)", transfer:"Transfer Now - SAMA Secure →", logout:"Logout", dashSafe:"Within KSA - Safe", dashBlock:"Outside KSA - BLOCKED"
+ },
+ ar:{
+  pTitle:"إشعار أمان SAMA", pSub:"التحقق متوافق مع SAMA", points:"• سيتم التحقق من موقعك لـ SAMA<br>• خارج المملكة = محظور خطر 960<br>• تشغيل GPS الوهمي = احتيال - محظور<br>• إيقاف GPS الوهمي + داخل المملكة = مسموح",
+  cleanPre:"✅ داخل المملكة - آمن - متوافق مع SAMA", mockPre:"⚠️ تم اكتشاف GPS الوهمي قيد التشغيل - خارج المملكة - خطر 960 - محظور", safePre:"GPS الوهمي متوقف - موقع حقيقي - داخل المملكة",
+  fakeOn:"🚨 GPS الوهمي قيد التشغيل - وهمي - الدقة 0m - محظور", fakeOff:"✅ GPS الوهمي متوقف - GPS حقيقي - الدقة جيدة",
+  clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف", mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور",
+  safe:"✅ متابعة آمنة - مسموح", block:"🚫 محظور - خطر 960", proceed:"المتابعة إلى تسجيل الدخول الآمن →", blocked:"🚫 الوصول محظور - خارج المملكة / GPS وهمي قيد التشغيل",
+  lTitle:"SAB - البنك السعودي الأول", ver:"التحقق - رمز OTP", vBtn:"تحقق", dTitle:"💳 لوحة التحكم", bal:"الرصيد المتاح", from:"من الحساب", to:"إلى المستفيد", amt:"المبلغ (ريال)", transfer:"تحويل الآن - آمن SAMA →", logout:"تسجيل خروج", dashSafe:"داخل المملكة - آمن", dashBlock:"خارج المملكة - محظور"
+ }
 };
-function setLang(l){ lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr'; document.getElementById('btnEn').className=l==='en'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border"; document.getElementById('btnAr').className=l==='ar'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border"; document.getElementById('title').innerText=T[l].title; document.getElementById('sub').innerText=T[l].sub; document.getElementById('locLabel').innerText=T[l].loc; document.getElementById('verLabel').innerText=T[l].ver; document.getElementById('otp').placeholder=T[l].otp; document.getElementById('vBtn').innerText=T[l].btn; if(lockedPlace) document.getElementById('country').innerText=lockedPlace; }
 
-function distKm(a,b,c,d){ const R=6371; const dLat=(c-a)*Math.PI/180; const dLon=(d-b)*Math.PI/180; const lat1=a*Math.PI/180; const lat2=c*Math.PI/180; const x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)*Math.sin(dLon/2); return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)); }
+function setLang(l){
+ lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr';
+ document.getElementById('btnEn').className=l==='en'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black border-2 border-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border";
+ document.getElementById('btnAr').className=l==='ar'?"text-xs px-5 py-2 rounded-full bg-black text-white font-black border-2 border-black":"text-xs px-5 py-2 rounded-full bg-gray-200 text-black font-black border";
+ document.getElementById('pTitle').innerText=T[l].pTitle; document.getElementById('pSub').innerText=T[l].pSub; document.getElementById('pPoints').innerHTML=T[l].points;
+ document.getElementById('lTitle').innerText=T[l].lTitle; document.getElementById('verLabel').innerText=T[l].ver; document.getElementById('vBtn').innerText=T[l].vBtn;
+ document.getElementById('dTitle').innerText=T[l].dTitle; document.getElementById('balLabel').innerText=T[l].bal; document.getElementById('fromL').innerText=T[l].from; document.getElementById('toL').innerText=T[l].to; document.getElementById('amtL').innerText=T[l].amt; document.getElementById('transferBtn').innerText=T[l].transfer; document.getElementById('logoutBtn').innerText=T[l].logout;
+ if(currentData) updateUI(currentData);
+}
 
-function getFallback(lat,lon){
-  if(lat>16 && lat<33 && lon>34 && lon<56){ return lang==='ar'? "🇸🇦 الرياض، المملكة العربية السعودية - داخل المملكة" : "🇸🇦 Riyadh, Saudi Arabia - Within KSA"; }
-  if(lat>=26.5 && lat<=27.8 && lon>=76.2 && lon<=77.5) return lang==='ar'? "🇮🇳 ألوار، راجستان، الهند - خارج المملكة" : "🇮🇳 Alwar, Rajasthan, India - Outside KSA";
-  if(lat>=8 && lat<=37 && lon>=68 && lon<=97.5) return lang==='ar'? "🇮🇳 الهند - خارج المملكة" : "🇮🇳 India - Outside KSA";
-  if(lat>=1.6 && lat<=13.2 && lon>=8.2 && lon<=16.5) return lang==='ar'? "🇨🇲 الكاميرون - خارج المملكة" : "🇨🇲 Cameroon - Outside KSA";
-  return lang==='ar'? `🌍 خارج المملكة - ${lat.toFixed(2)}, ${lon.toFixed(2)}` : `🌍 Outside KSA - ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+function getFallback(lat,lon){ if(lat>16&&lat<33&&lon>34&&lon<56) return lang==='ar'?"🇸🇦 الرياض - داخل المملكة":"🇸🇦 Riyadh - Within KSA"; if(lat>=8&&lat<=37&&lon>=68&&lon<=97.5) return lang==='ar'?"🇮🇳 الهند - خارج المملكة":"🇮🇳 India - Outside KSA"; return "🌍 Outside KSA"; }
+async function fetchDynamic(lat,lon){ try{ const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,{cache:'no-store'}); const d=await r.json(); if(!d.countryName) return null; let f="🌍"; if(d.countryCode) try{ f=String.fromCodePoint(...d.countryCode.toUpperCase().split('').map(c=>127397+c.charCodeAt())) }catch{} const city=d.city||""; const isKSA=d.countryCode==='SA'; return isKSA?(lang==='ar'?`${f} ${city?city+'، ':''}${d.countryName} - داخل المملكة`:`${f} ${city?city+', ':''}${d.countryName} - Within KSA`):(lang==='ar'?`${f} ${city?city+'، ':''}${d.countryName} - خارج المملكة`:`${f} ${city?city+', ':''}${d.countryName} - Outside KSA`); }catch{ return null; } }
+
+function updateUI(d){
+ currentData=d; isBlocked=d.block;
+ const fakeOn = d.isMock;
+ document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
+ document.getElementById('preLoc').innerText="📍 "+d.lat.toFixed(6)+", "+d.lon.toFixed(6);
+ document.getElementById('acc').innerText=`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt||0).toFixed(1)}m`;
+ document.getElementById('preAcc').innerText=`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt||0).toFixed(1)}m`;
+
+ // Fake GPS badge ON/OFF
+ document.getElementById('fakeBadge').innerText = fakeOn? T[lang].fakeOn : T[lang].fakeOff;
+ document.getElementById('fakeBadge').className = fakeOn? "text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-red-200 border border-red-700" : "text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-green-200 border border-green-700";
+ document.getElementById('fakeBadge2').innerText = fakeOn? T[lang].fakeOn : T[lang].fakeOff;
+ document.getElementById('fakeBadge2').className = fakeOn? "text-[10px] font-black mt-2 text-center px-3 py-1 rounded-full bg-red-200 border border-red-700 inline-block w-full" : "text-[10px] font-black mt-2 text-center px-3 py-1 rounded-full bg-green-200 border border-green-700 inline-block w-full";
+
+ if(d.block){
+  document.getElementById('status').innerText=T[lang].mock; document.getElementById('status').className="mt-3 text-[11px] font-black p-3 rounded-xl bg-red-200 border-2 border-red-700 text-center";
+  document.getElementById('mainBtn').innerText=T[lang].block; document.getElementById('mainBtn').className="w-full bg-red-600 text-white py-4 rounded-2xl font-black";
+  document.getElementById('preStatus').innerText=T[lang].mockPre; document.getElementById('preStatus').className="mt-4 text-[12px] font-black p-3 rounded-xl bg-red-200 border-2 border-red-700 text-center";
+  document.getElementById('proceedBtn').classList.add('hidden'); document.getElementById('blockedBtn').classList.remove('hidden'); document.getElementById('blockedBtn').innerText=T[lang].blocked;
+  document.getElementById('dashLoc').innerText="🚫 "+(d.place||"Outside KSA")+" - Risk 960"; document.getElementById('dSafe').innerText=T[lang].dashBlock; document.getElementById('dSafe').className="text-[10px] bg-red-200 px-3 py-1 rounded-full font-black border border-red-700";
+ } else {
+  document.getElementById('status').innerText=T[lang].clean; document.getElementById('status').className="mt-3 text-[11px] font-black p-3 rounded-xl bg-green-200 border-2 border-green-700 text-center";
+  document.getElementById('mainBtn').innerText=T[lang].safe; document.getElementById('mainBtn').className="w-full bg-black text-white py-4 rounded-2xl font-black";
+  document.getElementById('preStatus').innerText=T[lang].cleanPre+" - "+T[lang].safePre; document.getElementById('preStatus').className="mt-4 text-[12px] font-black p-3 rounded-xl bg-green-200 border-2 border-green-700 text-center";
+  document.getElementById('proceedBtn').classList.remove('hidden'); document.getElementById('blockedBtn').classList.add('hidden'); document.getElementById('proceedBtn').innerText=T[lang].proceed;
+  document.getElementById('dashLoc').innerText="✅ "+(d.place||"Riyadh - Within KSA")+" - Clean Risk 100"; document.getElementById('dSafe').innerText=T[lang].dashSafe; document.getElementById('dSafe').className="text-[10px] bg-green-200 px-3 py-1 rounded-full font-black border border-green-700";
+ }
+ document.getElementById('country').innerText=d.place; document.getElementById('preCountry').innerText=d.place;
 }
-async function fetchDynamic(lat,lon){
-  try{
-    const c=new AbortController(); setTimeout(()=>c.abort(),4000);
-    const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,{signal:c.signal, cache:'no-store'});
-    const d=await r.json(); if(!d.countryName) return null;
-    let flag="🌍"; if(d.countryCode){ try{ flag=String.fromCodePoint(...d.countryCode.toUpperCase().split('').map(x=>127397+x.charCodeAt())) }catch{} }
-    const city=d.city||d.locality||d.principalSubdivision||"";
-    const isKSA = d.countryCode==='SA' || d.countryName==='Saudi Arabia';
-    return isKSA? (lang==='ar'? `${flag} ${city?city+'، ':''}${d.countryName} - داخل المملكة` : `${flag} ${city?city+', ':''}${d.countryName} - Within KSA`) : (lang==='ar'? `${flag} ${city?city+'، ':''}${d.countryName} - خارج المملكة` : `${flag} ${city?city+', ':''}${d.countryName} - Outside KSA`);
-  }catch{ return null; }
-}
+
 async function render(d){
-  // SMART: agar 50 meter se kam move hua to ignore - no flicker
-  if(lastLat!==null){
-    const km = distKm(lastLat,lastLon,d.lat,d.lon);
-    if(km < 0.05){ // 50 meter se kam to update mat karo
-      document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
-      document.getElementById('acc').innerText=lang==='ar'?`الدقة: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`:`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`;
-      return;
-    }
-  }
-  lastLat=d.lat; lastLon=d.lon;
-
-  document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
-  document.getElementById('acc').innerText=lang==='ar'?`الدقة: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`:`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt!==null?d.alt.toFixed(1):"0")}m`;
-  let s=document.getElementById('status'), b=document.getElementById('mainBtn');
-  if(d.block){ s.innerText=T[lang].mock; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-red-200 text-black border-2 border-red-700 flex items-center justify-center text-center"; b.innerText=T[lang].block; b.className="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
-  else { s.innerText=T[lang].clean; s.className="mt-3 text-[12px] font-black p-3 rounded-xl bg-green-200 text-black border-2 border-green-700 flex items-center justify-center text-center"; b.innerText=T[lang].safe; b.className="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] h-[56px]"; }
-
-  // new location >50m to re-fetch name
-  lockedPlace = getFallback(d.lat,d.lon);
-  document.getElementById('country').innerText = lockedPlace;
-  const dyn = await fetchDynamic(d.lat,d.lon);
-  if(dyn){ lockedPlace = dyn; document.getElementById('country').innerText = dyn; }
+ if(lastLat!==null && Math.abs(lastLat-d.lat)<0.00005 && Math.abs(lastLon-d.lon)<0.00005){ document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6); return; }
+ lastLat=d.lat; lastLon=d.lon;
+ d.place=getFallback(d.lat,d.lon); updateUI(d);
+ const dyn=await fetchDynamic(d.lat,d.lon); if(dyn){ d.place=dyn; updateUI(d); }
 }
-function check(p){
-  let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude;
-  let inSaudi=lat>16&&lat<33&&lon>34&&lon<56; let isMock=false;
-  if(acc===0) isMock=true; if((alt===0||alt===null)&&acc<3) isMock=true;
-  render({lat,lon,acc,alt,block:isMock||!inSaudi});
-}
-function verify(){ let v=document.getElementById('otp').value; alert(v.length>=4?(lang==='ar'?"✅ تم التحقق":"✅ Verified - "+v):"Enter OTP"); }
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
-// SMART AUTO - watchPosition with distance filter
-watchId = navigator.geolocation.watchPosition(check, e=>{ document.getElementById('status').innerText="Enable Location"; }, {enableHighAccuracy:true, timeout:20000, maximumAge:0});
+function check(p){ let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude; let inSaudi=lat>16&&lat<33&&lon>34&&lon<56; let isMock=false; if(acc===0) isMock=true; if((alt===0||alt===null)&&acc<3) isMock=true; render({lat,lon,acc,alt,block:isMock||!inSaudi,isMock,place:getFallback(lat,lon)}); }
+function goLogin(){ document.getElementById('preLogin').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); }
+function goDashboard(){ document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('dashboard').classList.remove('hidden'); }
+function logout(){ document.getElementById('dashboard').classList.add('hidden'); document.getElementById('preLogin').classList.remove('hidden'); }
+function verifyAndGoDashboard(){ if(isBlocked){ alert(lang==='ar'?"🚫 محظور - GPS وهمي قيد التشغيل":"🚫 BLOCKED - Fake GPS ON - Risk 960"); return; } let v=document.getElementById('otp').value; if(v.length<4){ alert("Enter OTP"); return; } goDashboard(); }
+function doTransfer(){ let ben=document.getElementById('ben').value, amt=document.getElementById('amt').value; if(!ben||!amt){ alert(lang==='ar'?"أدخل المستفيد والمبلغ":"Enter Beneficiary & Amount"); return; } alert((lang==='ar'?"✅ تحويل آمن SAMA\n":"✅ SAMA Secure Transfer\n")+`To: ${ben}\nAmount: SAR ${amt}\n${currentData?currentData.place:"Riyadh - Within KSA"}`); }
+navigator.geolocation.watchPosition(check, e=>{}, {enableHighAccuracy:true, timeout:20000, maximumAge:0});
 setLang('en');
 </script>
 </body>
