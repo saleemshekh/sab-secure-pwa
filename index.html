@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAB - v37 FINAL FIXED</title>
+<title>SAB - v38 FINAL INSTANT</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600&family=Inter:wght@700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter','IBM Plex Sans Arabic',system-ui}
@@ -19,105 +19,64 @@ h1{text-align:center;font-size:22px;font-weight:800;margin-bottom:6px}.sub{text-
 .pill-yellow{background:#fef08a}.pill-green{background:#bbf7d0;border-color:#15803d}.pill-red{background:#fecaca;border-color:#dc2626;color:#7f1d1d}
 .pill-green-big{background:#bbf7d0;border-color:#15803d;text-align:center;font-weight:800;padding:14px 10px;border-radius:18px;border:2.5px solid #15803d}
 .pill-yellow-big{background:#fef08a;text-align:center;font-weight:800;padding:14px 10px;border-radius:18px;border:2.5px solid #000}
-.pill-red-big{background:#fecaca;border-color:#dc2626;color:#7f1d1d;text-align:center;font-weight:800;padding:14px 10px;border-radius:18px;border:2.5px solid #dc2626;line-height:1.3}
+.pill-red-big{background:#fecaca;border-color:#dc2626;color:#7f1d1d;text-align:center;font-weight:800;padding:14px 10px;border-radius:18px;border:2.5px solid #dc2626}
 .meta{font-family:monospace;font-size:13px;font-weight:600;margin-top:10px}.clear{clear:both}
 .btn-black{width:100%;background:#000;color:#fff;border:none;border-radius:16px;padding:16px;font-weight:800;font-size:15px;margin-top:14px;cursor:pointer}
-.btn-yellow{width:100%;background:#facc15;color:#000;border:2.5px solid #000;border-radius:16px;padding:16px;font-weight:800;font-size:15px;margin-top:14px;cursor:pointer}
-.btn-red{width:100%;background:#dc2626;color:#fff;border:none;border-radius:16px;padding:16px;font-weight:800;font-size:15px;margin-top:14px;cursor:pointer}
+.btn-yellow{width:100%;background:#facc15;color:#000;border:2.5px solid #000;border-radius:16px;padding:16px;font-weight:800;font-size:15px;margin-top:14px}
+.btn-red{width:100%;background:#dc2626;color:#fff;border:none;border-radius:16px;padding:16px;font-weight:800;font-size:15px;margin-top:14px}
 .hidden{display:none}input.otp{width:100%;border:2.5px solid #000;border-radius:12px;padding:12px;text-align:center;font-size:18px;font-weight:700;letter-spacing:6px;margin-top:10px}
 .balance{background:#000;color:#fff;border-radius:18px;padding:18px;text-align:center;margin-bottom:14px}.balance h2{font-size:28px;margin-top:6px}
-.badge-ksa{border-radius:999px;padding:8px 12px;font-weight:700;font-size:11px;text-align:center;border:2px solid #000;display:inline-block;margin-bottom:8px}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="lang-switch"><button class="lang-btn lang-ar" id="btnAr" onclick="setLang('ar')">العربية</button><button class="lang-btn lang-en" id="btnEn" onclick="setLang('en')">EN</button></div>
-<div id="screen1"><div class="icon-wrap" id="icon1">⚠️</div><h1 id="t_sama">SAMA Security Notice</h1><p class="sub" id="t_dynamic">Dynamic Location - SAMA Compliant 100%</p><div class="card"><div class="coord">📍 <span id="coord1">Detecting...</span></div><div class="pill pill-yellow" id="city1">🇸🇦 Detecting location...</div><div class="meta" id="acc1">Accuracy: --</div><div class="pill pill-green" id="fake1" style="float:right">Checking GPS...</div><div class="clear"></div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status1">Checking...</div></div><button class="btn-black" id="btnProceed1" onclick="go2()">→ Proceed to Secure Login</button></div>
-<div id="screen2" class="hidden"><div class="icon-wrap" style="width:64px;height:64px;font-size:28px">🏦</div><h1 id="t_sab">SAB - Saudi First Bank</h1><p class="sub" id="t_loginSub">Secure Login</p><div class="card"><div class="coord">📍 <span id="coord2">--</span></div><div class="pill pill-yellow" id="city2">--</div><div class="meta" id="acc2">--</div><div class="pill pill-green" id="fake2" style="float:right">--</div><div class="clear"></div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status2">--</div></div><div class="card"><div style="font-weight:800;font-size:12px" id="t_verif">VERIFICATION - OTP</div><input class="otp" id="otpInput" value="1234" maxlength="4"/><div class="pill pill-green" style="float:none;margin-top:10px" id="safeAllowed">--</div><div class="clear"></div></div><button class="btn-black" id="btnVerify" onclick="go3()">Verify</button><button class="btn-black" style="background:#fff;color:#000;border:2px solid #000;margin-top:8px" onclick="go1()" id="t_back">Back</button></div>
-<div id="screen3" class="hidden"><div class="balance"><div style="font-size:12px;opacity:0.8" id="t_balance">Available Balance</div><h2>SAR 125,450.00</h2><div class="badge-ksa pill-yellow" id="dashCity" style="margin-top:10px;background:#fef08a;color:#000">--</div></div><div class="card"><div class="pill pill-green" id="fake3" style="float:right">--</div><div class="clear"></div><div class="meta" id="acc3" style="margin-top:12px">--</div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status3">--</div></div><button class="btn-black" id="btnTransfer" onclick="alertTransfer()">Transfer Now →</button><button class="btn-black" style="background:#fff;color:#000;border:2px solid #000;margin-top:8px" onclick="go1()" id="t_logout">Logout</button></div>
+<div id="screen1"><div class="icon-wrap" id="icon1">⚠️</div><h1 id="t_sama">SAMA Security Notice</h1><p class="sub" id="t_dynamic">Dynamic Location - SAMA Compliant 100%</p><div class="card"><div class="coord">📍 <span id="coord1">24.672539, 46.712860</span></div><div class="pill pill-yellow" id="city1">🇸🇦 Riyadh, Saudi Arabia - Within KSA</div><div class="meta" id="acc1">Accuracy: 5m - Alt: 594.1m</div><div class="pill pill-green" id="fake1" style="float:right">Fake GPS OFF - Real GPS - OK ✅</div><div class="clear"></div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status1">Within KSA - Safe - Dynamic: Riyadh ✅</div></div><button class="btn-black" id="btnProceed1" onclick="go2()">→ Proceed to Secure Login</button></div>
+<div id="screen2" class="hidden"><div class="icon-wrap" style="width:64px;height:64px;font-size:28px">🏦</div><h1 id="t_sab">SAB - Saudi First Bank</h1><p class="sub" id="t_loginSub">Secure Login</p><div class="card"><div class="coord">📍 <span id="coord2">24.672539, 46.712860</span></div><div class="pill pill-yellow" id="city2">🇸🇦 Riyadh, Saudi Arabia - Within KSA</div><div class="meta" id="acc2">Accuracy: 5m - Alt: 594.1m</div><div class="pill pill-green" id="fake2" style="float:right">Fake GPS OFF - Real GPS - OK ✅</div><div class="clear"></div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status2">Within KSA - Risk 100 - OTP Allowed - Riyadh ✅</div></div><div class="card"><div style="font-weight:800;font-size:12px" id="t_verif">VERIFICATION - OTP - LOW RISK</div><input class="otp" value="1234" maxlength="4"/><div class="pill pill-green" style="float:none;margin-top:10px" id="safeAllowed">✅ Safe - Verify Allowed</div><div class="clear"></div></div><button class="btn-black" id="btnVerify" onclick="go3()">Verify</button><button class="btn-black" style="background:#fff;color:#000;border:2px solid #000;margin-top:8px" onclick="go1()" id="t_back">Back</button></div>
+<div id="screen3" class="hidden"><div class="balance"><div style="font-size:12px;opacity:0.8" id="t_balance">Available Balance</div><h2>SAR 125,450.00</h2><div class="pill pill-yellow" id="dashCity" style="margin-top:10px;background:#fef08a;color:#000">🇸🇦 Riyadh, Saudi Arabia - Within KSA</div></div><div class="card"><div class="pill pill-green" id="fake3" style="float:right">Fake GPS OFF - Real GPS - OK ✅</div><div class="clear"></div><div class="meta" id="acc3">Accuracy: 5m - Alt: 594.1m | 📍 24.672539, 46.712860</div></div><div class="card" style="padding:0;border:none;background:transparent"><div class="pill-green-big" id="status3">Within KSA - Safe - Riyadh ✅</div></div><button class="btn-black" id="btnTransfer" onclick="alertTransfer()">Transfer Now →</button><button class="btn-black" style="background:#fff;color:#000;border:2px solid #000;margin-top:8px" onclick="go1()" id="t_logout">Logout</button></div>
 </div>
 <script>
 let currentCity="Riyadh",currentCountry="Saudi Arabia",currentFlag="🇸🇦",isFake=false,isOutside=false,coords={lat:24.672539,lon:46.71286,acc:5,alt:594.1};
-const T={en:{sama:"SAMA Security Notice",dynamic:"Dynamic Location - SAMA Compliant 100%",sab:"SAB - Saudi First Bank",loginSub:"Secure Login - OTP Verification",verif:"VERIFICATION - OTP -",balance:"Available Balance",proceed:"→ Proceed to Secure Login",verify:"Verify",back:"Back",logout:"Logout",transferAllow:"Transfer Now →",transferBlock:"🚫 BLOCKED - Transfer Not Allowed - Risk 960",safe:"Within KSA - Safe - Dynamic:",safe2:"Within KSA - Risk 100 - OTP Allowed -",safe3:"Within KSA - Safe -",fakeOff:"Fake GPS OFF - Real GPS - OK ✅",fakeOn:"🚨 Fake GPS ON - HIGH RISK - Accuracy 0m",warning:"⚠️ Warning: Fake GPS ON - Risk 960 - Proceed with Caution (Low Risk - PreLogin Allow)",blocked:"🚫 HIGH RISK - Fake GPS ON - BLOCKED - Risk 960 - OTP Not Allowed",highRisk:"🚫 HIGH RISK - BLOCKED -",otpBlocked:"🚫 BLOCKED - HIGH RISK 960",verifyAllowed:"✅ Safe - Verify Allowed",within:"Within KSA",outside:"Outside KSA - Risk 960"},ar:{sama:"إشعار الأمان SAMA",dynamic:"الموقع الديناميكي - متوافق مع SAMA 100%",sab:"SAB - البنك السعودي الأول",loginSub:"تسجيل دخول آمن - التحقق OTP",verif:"التحقق - OTP -",balance:"الرصيد المتاح",proceed:"→ المتابعة إلى تسجيل الدخول الآمن",verify:"تحقق",back:"رجوع",logout:"تسجيل خروج",transferAllow:"التحويل الآن →",transferBlock:"🚫 محظور - التحويل غير مسموح - مخاطر 960",safe:"داخل السعودية - آمن - ديناميكي:",safe2:"داخل السعودية - مخاطر 100 - OTP مسموح -",safe3:"داخل السعودية - آمن -",fakeOff:"نظام تحديد المواقع الوهمي متوقف - GPS حقيقي - OK ✅",fakeOn:"🚨 نظام تحديد المواقع الوهمي قيد التشغيل - مخاطر عالية",warning:"⚠️ تحذير: نظام تحديد المواقع الوهمي - مخاطر 960 - المتابعة بحذر",blocked:"🚫 مخاطر عالية - محظور - مخاطر 960 - OTP غير مسموح",highRisk:"🚫 مخاطر عالية - محظور -",otpBlocked:"🚫 محظور - مخاطر عالية 960",verifyAllowed:"✅ آمن - التحقق مسموح",within:"داخل السعودية",outside:"خارج السعودية - مخاطر 960"}};
+const T={en:{sama:"SAMA Security Notice",dynamic:"Dynamic Location - SAMA Compliant 100%",sab:"SAB - Saudi First Bank",loginSub:"Secure Login - OTP Verification",verif:"VERIFICATION - OTP -",balance:"Available Balance",proceed:"→ Proceed to Secure Login",verify:"Verify",back:"Back",logout:"Logout",transferAllow:"Transfer Now →",transferBlock:"🚫 BLOCKED - Transfer Not Allowed - Risk 960",safe:"Within KSA - Safe - Dynamic:",safe2:"Within KSA - Risk 100 - OTP Allowed -",safe3:"Within KSA - Safe -",fakeOff:"Fake GPS OFF - Real GPS - OK ✅",fakeOn:"🚨 Fake GPS ON - HIGH RISK",warning:"⚠️ Warning: Fake GPS ON - Risk 960 - Proceed with Caution",blocked:"🚫 HIGH RISK - Fake GPS ON - BLOCKED - Risk 960 - OTP Not Allowed",highRisk:"🚫 HIGH RISK - BLOCKED -",otpBlocked:"🚫 BLOCKED - HIGH RISK 960",verifyAllowed:"✅ Safe - Verify Allowed",within:"Within KSA",outside:"Outside KSA - Risk 960"},ar:{sama:"إشعار الأمان SAMA",dynamic:"الموقع الديناميكي - متوافق مع SAMA 100%",sab:"SAB - البنك السعودي الأول",loginSub:"تسجيل دخول آمن - التحقق OTP",verif:"التحقق - OTP -",balance:"الرصيد المتاح",proceed:"→ المتابعة إلى تسجيل الدخول الآمن",verify:"تحقق",back:"رجوع",logout:"تسجيل خروج",transferAllow:"التحويل الآن →",transferBlock:"🚫 محظور - التحويل غير مسموح - مخاطر 960",safe:"داخل السعودية - آمن - ديناميكي:",safe2:"داخل السعودية - مخاطر 100 - OTP مسموح -",safe3:"داخل السعودية - آمن -",fakeOff:"نظام تحديد المواقع الوهمي متوقف - OK ✅",fakeOn:"🚨 نظام تحديد المواقع الوهمي - مخاطر عالية",warning:"⚠️ تحذير: مخاطر 960 - المتابعة بحذر",blocked:"🚫 مخاطر عالية - محظور - مخاطر 960",highRisk:"🚫 مخاطر عالية - محظور -",otpBlocked:"🚫 محظور - مخاطر 960",verifyAllowed:"✅ آمن - التحقق مسموح",within:"داخل السعودية",outside:"خارج السعودية - مخاطر 960"}};
 let lang='en';
 function setLang(l){lang=l;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.getElementById('btnEn').style.background=l==='en'?'#000':'#e5e7eb';document.getElementById('btnEn').style.color=l==='en'?'#fff':'#000';document.getElementById('btnAr').style.background=l==='ar'?'#000':'#e5e7eb';document.getElementById('btnAr').style.color=l==='ar'?'#fff':'#000';updateUI();}
-function isInKSA(lat,lon,country){if(country&&country.toLowerCase().includes("saudi")) return true;if(country&&country.toLowerCase().includes("pakistan")) return false;return lat>=16&&lat<=33&&lon>=34&&lon<=56;}
+function isInKSA(lat,lon){return lat>=16&&lat<=33&&lon>=34&&lon<=56;}
 function updateUI(){
-const t=T[lang];
-const outside = isOutside;
-const cityLabel = `${currentFlag} ${currentCity}, ${currentCountry} - ${outside?t.outside:t.within}`;
-document.getElementById('city1').innerText=cityLabel.length>45?cityLabel.substring(0,42)+'...':cityLabel;
-document.getElementById('city2').innerText=cityLabel.length>45?cityLabel.substring(0,42)+'...':cityLabel;
-document.getElementById('dashCity').innerText=cityLabel.length>45?cityLabel.substring(0,42)+'...':cityLabel;
-document.getElementById('city1').title=cityLabel;document.getElementById('city2').title=cityLabel;
+const t=T[lang];const outside=isOutside||isFake;
+const cityLabel=`${currentFlag} ${currentCity}, ${currentCountry} - ${outside?t.outside:t.within}`;
+document.getElementById('city1').innerText=cityLabel;document.getElementById('city2').innerText=cityLabel;document.getElementById('dashCity').innerText=cityLabel;
 document.getElementById('coord1').innerText=`${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;
 document.getElementById('coord2').innerText=`${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;
-document.getElementById('coord3').innerText=`${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;
-document.getElementById('acc1').innerText=`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m`;
-document.getElementById('acc2').innerText=`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m`;
+document.getElementById('acc1').innerText=`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m`;document.getElementById('acc2').innerText=`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m`;
 document.getElementById('acc3').innerText=`Accuracy: ${coords.acc}m - Alt: ${coords.alt}m | 📍 ${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;
-document.getElementById('t_sama').innerText=t.sama;document.getElementById('t_dynamic').innerText=t.dynamic;
-document.getElementById('t_sab').innerText=t.sab;document.getElementById('t_loginSub').innerText=t.loginSub;
-document.getElementById('t_balance').innerText=t.balance;document.getElementById('t_back').innerText=t.back;document.getElementById('t_logout').innerText=t.logout;
-const fakeText = (isFake||outside)?t.fakeOn:t.fakeOff;
+document.getElementById('t_sama').innerText=t.sama;document.getElementById('t_dynamic').innerText=t.dynamic;document.getElementById('t_sab').innerText=t.sab;
+const fakeText=outside?t.fakeOn:t.fakeOff;
 document.getElementById('fake1').innerText=fakeText;document.getElementById('fake2').innerText=fakeText;document.getElementById('fake3').innerText=fakeText;
-document.getElementById('fake1').className=(isFake||outside)?"pill pill-red":"pill pill-green";
-document.getElementById('fake2').className=(isFake||outside)?"pill pill-red":"pill pill-green";
-document.getElementById('fake3').className=(isFake||outside)?"pill pill-red":"pill pill-green";
-if(outside||isFake){
-document.getElementById('icon1').innerText="🚫";document.getElementById('icon1').style.background="#fecaca";
-document.getElementById('status1').innerText=t.warning;document.getElementById('status1').className="pill-yellow-big";
-document.getElementById('status2').innerText=t.blocked;document.getElementById('status2').className="pill-red-big";
-document.getElementById('status3').innerText=`${t.highRisk} ${currentCity.substring(0,2).toUpperCase()} - ${currentCity}`;document.getElementById('status3').className="pill-red-big";
-document.getElementById('btnProceed1').className="btn-yellow";document.getElementById('btnProceed1').innerText=lang==='ar'?"⚠️ تحذير - المتابعة إلى الدخول →":"⚠️ Warning - Proceed to Login →";
-document.getElementById('btnVerify').className="btn-red";document.getElementById('btnVerify').innerText=t.otpBlocked;
-document.getElementById('btnTransfer').className="btn-red";document.getElementById('btnTransfer').innerText=t.transferBlock;
-document.getElementById('safeAllowed').innerText=lang==='ar'?"🚫 محظور - OTP غير مسموح":"🚫 BLOCKED - OTP Not Allowed";document.getElementById('safeAllowed').className="pill pill-red";
-}else{
-document.getElementById('icon1').innerText="⚠️";document.getElementById('icon1').style.background="#facc15";
-document.getElementById('status1').innerText=`${t.safe} ${currentCity} ✅`;document.getElementById('status1').className="pill-green-big";
-document.getElementById('status2').innerText=`${t.safe2} ${currentCity} ✅`;document.getElementById('status2').className="pill-green-big";
-document.getElementById('status3').innerText=`${t.safe3} ${currentCity} ✅`;document.getElementById('status3').className="pill-green-big";
-document.getElementById('btnProceed1').className="btn-black";document.getElementById('btnProceed1').innerText=t.proceed;
-document.getElementById('btnVerify').className="btn-black";document.getElementById('btnVerify').innerText=t.verify;
-document.getElementById('btnTransfer').className="btn-black";document.getElementById('btnTransfer').innerText=t.transferAllow;
-document.getElementById('safeAllowed').innerText=t.verifyAllowed;document.getElementById('safeAllowed').className="pill pill-green";
-}
-document.getElementById('t_verif').innerText=t.verif+" "+(outside||isFake?"HIGH RISK":"LOW RISK");
+document.getElementById('fake1').className=outside?"pill pill-red":"pill pill-green";document.getElementById('fake2').className=outside?"pill pill-red":"pill pill-green";document.getElementById('fake3').className=outside?"pill pill-red":"pill pill-green";
+if(outside){document.getElementById('icon1').innerText="🚫";document.getElementById('icon1').style.background="#fecaca";document.getElementById('status1').innerText=t.warning;document.getElementById('status1').className="pill-yellow-big";document.getElementById('status2').innerText=t.blocked;document.getElementById('status2').className="pill-red-big";document.getElementById('status3').innerText=`${t.highRisk} ${currentCity}`;document.getElementById('status3').className="pill-red-big";document.getElementById('btnProceed1').className="btn-yellow";document.getElementById('btnProceed1').innerText=lang==='ar'?"⚠️ تحذير - المتابعة →":"⚠️ Warning - Proceed to Login →";document.getElementById('btnVerify').className="btn-red";document.getElementById('btnVerify').innerText=t.otpBlocked;document.getElementById('btnTransfer').className="btn-red";document.getElementById('btnTransfer').innerText=t.transferBlock;document.getElementById('safeAllowed').innerText="🚫 BLOCKED - OTP Not Allowed";document.getElementById('safeAllowed').className="pill pill-red";}else{document.getElementById('icon1').innerText="⚠️";document.getElementById('icon1').style.background="#facc15";document.getElementById('status1').innerText=`${t.safe} ${currentCity} ✅`;document.getElementById('status1').className="pill-green-big";document.getElementById('status2').innerText=`${t.safe2} ${currentCity} ✅`;document.getElementById('status2').className="pill-green-big";document.getElementById('status3').innerText=`${t.safe3} ${currentCity} ✅`;document.getElementById('status3').className="pill-green-big";document.getElementById('btnProceed1').className="btn-black";document.getElementById('btnProceed1').innerText=t.proceed;document.getElementById('btnVerify').className="btn-black";document.getElementById('btnVerify').innerText=t.verify;document.getElementById('btnTransfer').className="btn-black";document.getElementById('btnTransfer').innerText=t.transferAllow;document.getElementById('safeAllowed').innerText=t.verifyAllowed;document.getElementById('safeAllowed').className="pill pill-green";}
+document.getElementById('t_verif').innerText=t.verif+(outside?" HIGH RISK":" LOW RISK");document.getElementById('t_balance').innerText=t.balance;document.getElementById('t_back').innerText=t.back;document.getElementById('t_logout').innerText=t.logout;
 }
 function go1(){document.getElementById('screen1').classList.remove('hidden');document.getElementById('screen2').classList.add('hidden');document.getElementById('screen3').classList.add('hidden');}
-function go2(){document.getElementById('screen1').classList.add('hidden');document.getElementById('screen2').classList.remove('hidden');document.getElementById('screen3').classList.add('hidden');if(isOutside||isFake) setTimeout(()=>alert(T[lang].blocked),200);}
-function go3(){if(isOutside||isFake){alert(T[lang].blocked);return;}document.getElementById('screen1').classList.add('hidden');document.getElementById('screen2').classList.add('hidden');document.getElementById('screen3').classList.remove('hidden');}
-function alertTransfer(){if(isOutside||isFake){alert(T[lang].transferBlock);return;}alert(lang==='ar'?"✅ التحويل مسموح":"✅ Transfer Allowed");}
-function detectFake(pos){
-coords.acc=Math.round(pos.coords.accuracy||5);coords.alt=(pos.coords.altitude||594.1).toFixed?pos.coords.altitude.toFixed(1):594.1;
-coords.lat=pos.coords.latitude;coords.lon=pos.coords.longitude;
-isFake = coords.acc===0 || pos.coords.altitude===0 || pos.mocked===true;
-reverseGeocode(coords.lat,coords.lon);
-}
-async function reverseGeocode(lat,lon){
-try{
-const url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}&zoom=10`;
-const res=await fetch(url);const data=await res.json();
-let city=data.address.city||data.address.town||data.address.village||data.address.municipality||data.address.county||"Unknown";
-let country=data.address.country||"";
-currentCity=city;currentCountry=country;
-if(country.toLowerCase().includes("saudi")){currentFlag="🇸🇦";currentCountry=lang==='ar'?"السعودية":"Saudi Arabia";}
-else if(country.toLowerCase().includes("pakistan")){currentFlag="🇵🇰";currentCountry=lang==='ar'?"باكستان":"Pakistan";}
-else currentFlag="🌍";
-isOutside=!isInKSA(lat,lon,country);
-if(isOutside) isFake=true;
+function go2(){document.getElementById('screen1').classList.add('hidden');document.getElementById('screen2').classList.remove('hidden');document.getElementById('screen3').classList.add('hidden');if(isOutside) setTimeout(()=>alert(T[lang].blocked),200);}
+function go3(){if(isOutside){alert(T[lang].blocked);return;}document.getElementById('screen1').classList.add('hidden');document.getElementById('screen2').classList.add('hidden');document.getElementById('screen3').classList.remove('hidden');}
+function alertTransfer(){if(isOutside){alert(T[lang].transferBlock);return;}alert("✅ Transfer Allowed");}
+function checkLocation(lat,lon){
+coords.lat=lat;coords.lon=lon;isOutside=!isInKSA(lat,lon);
+if(lat>24&&lat<26&&lon>67&&lon<70){currentCity="Tando Allahyar";currentCountry=lang==='ar'?"باكستان":"Pakistan";currentFlag="🇵🇰";isOutside=true;isFake=true;coords.acc=0;coords.alt=0;}
+else if(lat>23&&lat<27&&lon>44&&lon<48){currentCity="Riyadh";currentCountry=lang==='ar'?"السعودية":"Saudi Arabia";currentFlag="🇸🇦";if(!isFake) isOutside=false;}
+else if(isOutside){currentCity="Outside KSA";currentCountry=lang==='ar'?"خارج":"Outside";currentFlag="🌍";isFake=true;}
 updateUI();
-}catch(e){
-if(lat>16&&lat<37&&lon>60&&lon<75){currentCity="Tando Allahyar";currentCountry=lang==='ar'?"باكستان":"Pakistan";currentFlag="🇵🇰";isOutside=true;isFake=true;}
-else{currentCity="Riyadh";currentCountry=lang==='ar'?"السعودية":"Saudi Arabia";currentFlag="🇸🇦";isOutside=false;}
-updateUI();
-}
 }
 function initGPS(){
+updateUI();
 if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(p=>detectFake(p),e=>{currentCity="Riyadh";currentCountry=lang==='ar'?"السعودية":"Saudi Arabia";currentFlag="🇸🇦";isOutside=false;updateUI();},{enableHighAccuracy:true,timeout:8000});
-navigator.geolocation.watchPosition(p=>detectFake(p),null,{enableHighAccuracy:true});
-}else{updateUI();}
+navigator.geolocation.getCurrentPosition(p=>{coords.acc=Math.round(p.coords.accuracy);coords.alt=(p.coords.altitude||594.1).toFixed(1);if(p.coords.accuracy===0||p.coords.altitude===0) isFake=true;checkLocation(p.coords.latitude,p.coords.longitude);},e=>{updateUI();},{enableHighAccuracy:true,timeout:5000,maximumAge:10000});
+navigator.geolocation.watchPosition(p=>{coords.acc=Math.round(p.coords.accuracy);coords.alt=(p.coords.altitude||594.1).toFixed(1);if(p.coords.accuracy===0) isFake=true;checkLocation(p.coords.latitude,p.coords.longitude);},null,{enableHighAccuracy:true});
 }
-let tap=0;document.getElementById('icon1').addEventListener('click',()=>{tap++;if(tap>=5){isOutside=!isOutside;is
+}
+let tap=0;document.getElementById('icon1').addEventListener('click',()=>{tap++;if(tap>=5){isFake=!isFake;isOutside=isFake;if(isOutside){checkLocation(25.46261,68.691746);}else{checkLocation(24.672539,46.71286);coords.acc=5;coords.alt=594.1;isFake=false;}tap=0;}});
+window.setFakeLocation=(lat,lon)=>{isFake=true;checkLocation(lat,lon);};
+initGPS();setLang('en');
+</script>
+</body>
+</html>
