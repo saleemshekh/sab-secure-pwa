@@ -1,53 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAB SAMA v28 FINAL FIXED</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAB SAMA v30 FINAL HIGH RISK BLOCK</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>body{background:#0f172a;font-family:'Tajawal',sans-serif}.mono{font-family:'JetBrains Mono',monospace}#location,#acc,#preLoc,#preAcc,#dashLoc{direction:ltr!important}</style>
 </head>
 <body class="bg-[#0f172a] min-h-screen flex justify-center p-3">
 
-<!-- SCREEN 1 : PRE-LOGIN -->
 <div id="preLogin" class="bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl mt-2">
-  <!-- TABS INSIDE CARD - FIXED -->
   <div class="flex gap-2 mb-4">
     <button id="btnEn1" onclick="setLang('en')" class="text-xs px-6 py-2 rounded-full bg-black text-white font-black border-2 border-black">EN</button>
     <button id="btnAr1" onclick="setLang('ar')" class="text-xs px-6 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
   </div>
   <div class="text-center"><div class="w-20 h-20 bg-yellow-400 rounded-full mx-auto flex items-center justify-center text-4xl">⚠️</div><h1 id="pTitle" class="text-[20px] font-black mt-3">SAMA Security Notice</h1><p id="pSub" class="text-[11px] font-bold">Verification compatible with SAMA</p></div>
-  <div class="bg-gray-100 rounded-2xl border-2 border-black p-4 mt-4">
-    <p id="preLoc" class="text-[12px] font-black mono">📍 Checking...</p>
-    <p id="preCountry" class="text-[11px] font-bold mt-2 bg-yellow-200 border border-black rounded-full px-3 py-1 inline-block">Detecting...</p>
-    <p id="preAcc" class="text-[10px] font-bold mt-2 mono">Accuracy: --</p>
-    <p id="fakeBadge" class="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-gray-300">Checking Fake GPS...</p>
-  </div>
+  <div class="bg-gray-100 rounded-2xl border-2 border-black p-4 mt-4"><p id="preLoc" class="text-[12px] font-black mono">📍 Checking...</p><p id="preCountry" class="text-[11px] font-bold mt-2 bg-yellow-200 border border-black rounded-full px-3 py-1 inline-block">Detecting...</p><p id="preAcc" class="text-[10px] font-bold mt-2 mono">Accuracy: --</p><p id="fakeBadge" class="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-gray-300">Checking...</p></div>
   <div id="pPoints" class="bg-yellow-50 border-2 border-yellow-600 rounded-xl p-3 mt-4 text-[11px] font-black"></div>
   <div id="preStatus" class="mt-4 text-[12px] font-black p-3 rounded-xl bg-gray-200 border-2 text-center">Checking...</div>
-  <button id="proceedBtn" onclick="goLogin()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[13px] mt-5 hidden">Proceed to Secure Login →</button>
+  <button id="proceedBtn" onclick="goLogin()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[13px] mt-5 hidden">Proceed →</button>
 </div>
 
-<!-- SCREEN 2 : LOGIN -->
 <div id="loginScreen" class="hidden bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl mt-2">
   <div class="flex gap-2 mb-4">
     <button id="btnEn2" onclick="setLang('en')" class="text-xs px-6 py-2 rounded-full bg-black text-white font-black border-2 border-black">EN</button>
     <button id="btnAr2" onclick="setLang('ar')" class="text-xs px-6 py-2 rounded-full bg-gray-200 text-black font-black border">العربية</button>
   </div>
-  <div class="text-center mb-4"><div class="w-20 h-20 bg-black rounded-full mx-auto flex items-center justify-center text-4xl">📍</div><h1 id="lTitle" class="text-[20px] font-black mt-3">SAB - Saudi First Bank</h1><span class="inline-block mt-2 bg-green-200 text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA v28 FIXED</span></div>
+  <div class="text-center mb-4"><div class="w-20 h-20 bg-black rounded-full mx-auto flex items-center justify-center text-4xl">📍</div><h1 id="lTitle" class="text-[20px] font-black mt-3">SAB - Saudi First Bank</h1><span class="inline-block mt-2 bg-green-200 text-[11px] px-3 py-1 rounded-full font-black border border-green-700">● PWA v30 HIGH RISK BLOCK</span></div>
   <div class="bg-gray-100 rounded-2xl border-2 p-4 mb-4">
-    <p id="location" class="text-[16px] font-black mono text-center">--.------</p>
-    <div class="flex justify-center mt-2"><p id="country" class="text-[11px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-2">Detecting...</p></div>
-    <p id="acc" class="text-[11px] font-bold mt-2 text-center mono">Accuracy: --</p>
-    <p id="fakeBadge2" class="text-[10px] font-black mt-2 text-center px-3 py-1 rounded-full bg-gray-300 inline-block w-full">Fake GPS Check...</p>
+    <p id="location" class="text-[16px] font-black mono text-center">--.------</p><div class="flex justify-center mt-2"><p id="country" class="text-[11px] font-black bg-yellow-200 border-2 border-black rounded-full px-4 py-2">Detecting...</p></div>
+    <p id="acc" class="text-[11px] font-bold mt-2 text-center mono">Accuracy: --</p><p id="fakeBadge2" class="text-[10px] font-black mt-2 text-center px-3 py-1 rounded-full bg-gray-300 inline-block w-full">Checking...</p>
     <div id="status" class="mt-3 text-[11px] font-black p-3 rounded-xl bg-gray-200 border-2 text-center">Checking...</div>
   </div>
   <div class="bg-gray-100 rounded-2xl border-2 p-4 mb-4"><label id="verLabel" class="text-[11px] font-black block mb-2">VERIFICATION - OTP</label><div class="grid grid-cols-[1fr_90px] gap-2"><input id="otp" placeholder="123456" class="border-2 border-black rounded-xl px-3 py-3 text-[14px] font-bold outline-none"><button id="vBtn" onclick="verifyAndGoDashboard()" class="bg-black text-white rounded-xl font-black text-[13px]">Verify</button></div></div>
-  <button id="mainBtn" class="w-full bg-black text-white py-4 rounded-2xl font-black">Checking...</button>
+  <button id="mainBtn" onclick="verifyAndGoDashboard()" class="w-full bg-black text-white py-4 rounded-2xl font-black">Checking...</button>
 </div>
 
-<!-- SCREEN 3 : DASHBOARD -->
 <div id="dashboard" class="hidden bg-white rounded-[28px] w-full max-w-[390px] p-5 shadow-2xl mt-2">
   <div class="flex gap-2 mb-4">
     <button id="btnEn3" onclick="setLang('en')" class="text-xs px-6 py-2 rounded-full bg-black text-white font-black border-2 border-black">EN</button>
@@ -55,55 +43,11 @@
   </div>
   <div class="flex justify-between items-center mb-4"><h1 id="dTitle" class="text-[18px] font-black">💳 Dashboard</h1><span id="dSafe" class="text-[10px] bg-green-200 px-3 py-1 rounded-full font-black border border-green-700">Safe</span></div>
   <div class="bg-black text-white rounded-2xl p-4 mb-4"><p id="balLabel" class="text-[11px] opacity-70">Available Balance</p><p class="text-[26px] font-black mono">SAR 125,450.00</p><p id="dashLoc" class="text-[10px] font-bold mono mt-3 bg-white/20 p-2 rounded-xl">📍 Checking...</p><p id="fakeBadge3" class="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-gray-300 text-black">Checking...</p></div>
-  <div class="bg-gray-100 rounded-2xl border-2 p-4"><h2 id="tTitle" class="text-[14px] font-black mb-3">Transfer / Payment</h2><label id="fromL" class="text-[10px] font-black">From</label><select class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1 bg-white"><option>Savings - ****4582</option></select><label id="toL" class="text-[10px] font-black mt-3 block">To Beneficiary</label><input id="ben" placeholder="IBAN" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1"><label id="amtL" class="text-[10px] font-black mt-3 block">Amount (SAR)</label><input id="amt" type="number" placeholder="0.00" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[14px] font-black mono mt-1"><button id="transferBtn" onclick="doTransfer()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] mt-4">Transfer Now →</button><button id="logoutBtn" onclick="logout()" class="w-full bg-white border-2 border-black py-3 rounded-2xl font-black text-[12px] mt-2">Logout</button></div>
+  <div class="bg-gray-100 rounded-2xl border-2 p-4"><h2 id="tTitle" class="text-[14px] font-black mb-3">Transfer / Payment - HIGH RISK</h2><label id="fromL" class="text-[10px] font-black">From</label><select class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1 bg-white"><option>Savings - ****4582</option></select><label id="toL" class="text-[10px] font-black mt-3 block">To Beneficiary</label><input id="ben" placeholder="IBAN" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[12px] font-bold mt-1"><label id="amtL" class="text-[10px] font-black mt-3 block">Amount (SAR)</label><input id="amt" type="number" placeholder="0.00" class="w-full border-2 border-black rounded-xl px-3 py-3 text-[14px] font-black mono mt-1"><button id="transferBtn" onclick="doTransfer()" class="w-full bg-black text-white py-4 rounded-2xl font-black text-[14px] mt-4">Transfer Now →</button><button id="logoutBtn" onclick="logout()" class="w-full bg-white border-2 border-black py-3 rounded-2xl font-black text-[12px] mt-2">Logout</button></div>
 </div>
 
 <script>
 let lang='en',lastLat=null,lastLon=null,lastMock=null,isBlocked=false,currentData=null;
 const T={
- en:{pTitle:"SAMA Security Notice",pSub:"Verification compatible with SAMA",points:"• Location will be verified for SAMA<br>• Outside KSA = BLOCKED Risk 960<br>• Fake GPS ON = Fraud - Warning<br>• Fake GPS OFF + Within KSA = Allowed",cleanPre:"✅ Within KSA - Safe - Compliant with SAMA",mockPre:"⚠️ Warning: Fake GPS ON Detected - Outside KSA - Risk 960 - Proceed with Caution",fakeOn:"🚨 Fake GPS ON - Mock - Accuracy 0m - WARNING",fakeOff:"✅ Fake GPS OFF - Real GPS - Accuracy OK",clean:"✅ Within the Kingdom - Compliant with SAMA - 100% Risk - Clean Site",mock:"⚠️ Fake Location Detected - Risk 960 - Warning",safe:"✅ Safe follow-up - Allowed",block:"⚠️ Warning - Risk 960",proceed:"Proceed to Secure Login →",warnProceed:"⚠️ Warning - Proceed to Login →",lTitle:"SAB - Saudi First Bank",ver:"VERIFICATION - OTP",vBtn:"Verify",dTitle:"💳 Dashboard",bal:"Available Balance",from:"From Account",to:"To Beneficiary",amt:"Amount (SAR)",transfer:"Transfer Now - SAMA Secure →",logout:"Logout",dashSafe:"Within KSA - Safe",dashBlock:"Outside KSA - Warning"},
- ar:{pTitle:"إشعار أمان SAMA",pSub:"التحقق متوافق مع SAMA",points:"• سيتم التحقق من موقعك لـ SAMA<br>• خارج المملكة = محظور خطر 960<br>• تشغيل GPS الوهمي = تحذير<br>• إيقاف GPS الوهمي + داخل المملكة = مسموح",cleanPre:"✅ داخل المملكة - آمن - متوافق مع SAMA",mockPre:"⚠️ تحذير: تم اكتشاف GPS وهمي - خارج المملكة - خطر 960 - المتابعة بحذر",fakeOn:"🚨 GPS الوهمي قيد التشغيل - وهمي - الدقة 0m - تحذير",fakeOff:"✅ GPS الوهمي متوقف - GPS حقيقي - الدقة جيدة",clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف",mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - تحذير",safe:"✅ متابعة آمنة - مسموح",block:"⚠️ تحذير - خطر 960",proceed:"المتابعة إلى تسجيل الدخول الآمن →",warnProceed:"⚠️ تحذير - المتابعة إلى تسجيل الدخول →",lTitle:"SAB - البنك السعودي الأول",ver:"التحقق - رمز OTP",vBtn:"تحقق",dTitle:"💳 لوحة التحكم",bal:"الرصيد المتاح",from:"من الحساب",to:"إلى المستفيد",amt:"المبلغ (ريال)",transfer:"تحويل الآن - آمن SAMA →",logout:"تسجيل خروج",dashSafe:"داخل المملكة - آمن",dashBlock:"خارج المملكة - تحذير"}
-};
-function setLang(l){lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';for(let i=1;i<=3;i++){document.getElementById('btnEn'+i).className=l==='en'?"text-xs px-6 py-2 rounded-full bg-black text-white font-black border-2 border-black":"text-xs px-6 py-2 rounded-full bg-gray-200 text-black font-black border";document.getElementById('btnAr'+i).className=l==='ar'?"text-xs px-6 py-2 rounded-full bg-black text-white font-black border-2 border-black":"text-xs px-6 py-2 rounded-full bg-gray-200 text-black font-black border";}document.getElementById('pTitle').innerText=T[l].pTitle;document.getElementById('pSub').innerText=T[l].pSub;document.getElementById('pPoints').innerHTML=T[l].points;document.getElementById('lTitle').innerText=T[l].lTitle;document.getElementById('verLabel').innerText=T[l].ver;document.getElementById('vBtn').innerText=T[l].vBtn;document.getElementById('dTitle').innerText=T[l].dTitle;document.getElementById('balLabel').innerText=T[l].bal;document.getElementById('fromL').innerText=T[l].from;document.getElementById('toL').innerText=T[l].to;document.getElementById('amtL').innerText=T[l].amt;document.getElementById('transferBtn').innerText=T[l].transfer;document.getElementById('logoutBtn').innerText=T[l].logout;if(currentData)updateUI(currentData);}
-function getFallback(lat,lon){if(lat>16&&lat<33&&lon>34&&lon<56)return lang==='ar'?"🇸🇦 الرياض - داخل المملكة":"🇸🇦 Riyadh - Within KSA";if(lat>=8&&lat<=37&&lon>=68&&lon<=97.5)return lang==='ar'?"🇮🇳 الهند - خارج المملكة":"🇮🇳 India - Outside KSA";return lang==='ar'?"🌍 خارج المملكة":"🌍 Outside KSA";}
-async function fetchDynamic(lat,lon){try{const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,{cache:'no-store'});const d=await r.json();if(!d.countryName)return null;let f="🌍";if(d.countryCode)try{f=String.fromCodePoint(...d.countryCode.toUpperCase().split('').map(c=>127397+c.charCodeAt()))}catch{}const city=d.city||d.locality||"";const isKSA=d.countryCode==='SA';return isKSA?(lang==='ar'?`${f} ${city?city+'، ':''}${d.countryName} - داخل المملكة`:`${f} ${city?city+', ':''}${d.countryName} - Within KSA`):(lang==='ar'?`${f} ${city?city+'، ':''}${d.countryName} - خارج المملكة`:`${f} ${city?city+', ':''}${d.countryName} - Outside KSA`);}catch{return null;}}
-function updateUI(d){
- currentData=d;isBlocked=d.block;
- document.getElementById('location').innerText=d.lat.toFixed(6)+", "+d.lon.toFixed(6);
- document.getElementById('preLoc').innerText="📍 "+d.lat.toFixed(6)+", "+d.lon.toFixed(6);
- document.getElementById('acc').innerText=`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt||0).toFixed(1)}m`;
- document.getElementById('preAcc').innerText=`Accuracy: ${Math.round(d.acc)}m - Alt: ${(d.alt||0).toFixed(1)}m`;
- document.getElementById('dashLoc').innerText=(d.block?"⚠️ ":"✅ ")+d.place+(d.block?" - Risk 960 - LIVE AUTO":" - Risk 100 - LIVE AUTO");
- const badgeText=d.isMock?T[lang].fakeOn:T[lang].fakeOff;
- const onC="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-red-200 border-2 border-red-700";
- const offC="text-[10px] font-black mt-2 px-3 py-1 rounded-full inline-block bg-green-200 border-2 border-green-700";
- document.getElementById('fakeBadge').innerText=badgeText;document.getElementById('fakeBadge').className=d.isMock?onC:offC;
- document.getElementById('fakeBadge2').innerText=badgeText;document.getElementById('fakeBadge2').className=d.isMock?onC+" w-full text-center":offC+" w-full text-center";
- document.getElementById('fakeBadge3').innerText=badgeText;document.getElementById('fakeBadge3').className=d.isMock?onC:offC;
- if(d.block){
-  document.getElementById('status').innerText=T[lang].mock;document.getElementById('status').className="mt-3 text-[11px] font-black p-3 rounded-xl bg-yellow-200 border-2 border-yellow-700 text-center";
-  document.getElementById('mainBtn').innerText=T[lang].block;document.getElementById('mainBtn').className="w-full bg-yellow-500 text-black py-4 rounded-2xl font-black border-2 border-black";
-  document.getElementById('preStatus').innerText=T[lang].mockPre;document.getElementById('preStatus').className="mt-4 text-[12px] font-black p-3 rounded-xl bg-yellow-200 border-2 border-yellow-700 text-center";
-  document.getElementById('proceedBtn').classList.remove('hidden');document.getElementById('proceedBtn').innerText=T[lang].warnProceed;document.getElementById('proceedBtn').className="w-full bg-yellow-500 text-black py-4 rounded-2xl font-black text-[13px] mt-5 border-2 border-black";
-  document.getElementById('dSafe').innerText=T[lang].dashBlock;document.getElementById('dSafe').className="text-[10px] bg-yellow-200 px-3 py-1 rounded-full font-black border border-yellow-700";
- }else{
-  document.getElementById('status').innerText=T[lang].clean;document.getElementById('status').className="mt-3 text-[11px] font-black p-3 rounded-xl bg-green-200 border-2 border-green-700 text-center";
-  document.getElementById('mainBtn').innerText=T[lang].safe;document.getElementById('mainBtn').className="w-full bg-black text-white py-4 rounded-2xl font-black";
-  document.getElementById('preStatus').innerText=T[lang].cleanPre;document.getElementById('preStatus').className="mt-4 text-[12px] font-black p-3 rounded-xl bg-green-200 border-2 border-green-700 text-center";
-  document.getElementById('proceedBtn').classList.remove('hidden');document.getElementById('proceedBtn').innerText=T[lang].proceed;document.getElementById('proceedBtn').className="w-full bg-black text-white py-4 rounded-2xl font-black text-[13px] mt-5";
-  document.getElementById('dSafe').innerText=T[lang].dashSafe;document.getElementById('dSafe').className="text-[10px] bg-green-200 px-3 py-1 rounded-full font-black border border-green-700";
- }
- document.getElementById('country').innerText=d.place;document.getElementById('preCountry').innerText=d.place;
-}
-async function render(d){let place=getFallback(d.lat,d.lon);d.place=place;updateUI(d);const dyn=await fetchDynamic(d.lat,d.lon);if(dyn){d.place=dyn;updateUI(d);}}
-function check(p){let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude;let inSaudi=lat>16&&lat<33&&lon>34&&lon<56;let isMock=false;if(acc===0)isMock=true;if((alt===0||alt===null)&&acc<3)isMock=true;if(lastLat!==null){const dLat=(lat-lastLat)*Math.PI/180,dLon=(lon-lastLon)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lastLat*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)**2;const km=6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));if(km<0.01 && isMock===lastMock)return;}lastLat=lat;lastLon=lon;lastMock=isMock;render({lat,lon,acc,alt,block:isMock||!inSaudi,isMock,place:getFallback(lat,lon)});}
-function goLogin(){document.getElementById('preLogin').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');}
-function goDashboard(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');}
-function logout(){document.getElementById('dashboard').classList.add('hidden');document.getElementById('loginScreen').classList.add('hidden');document.getElementById('preLogin').classList.remove('hidden');}
-function verifyAndGoDashboard(){let v=document.getElementById('otp').value;if(v.length<4){alert(lang==='ar'?"أدخل رمز OTP":"Enter OTP");return;}goDashboard();}
-function doTransfer(){let ben=document.getElementById('ben').value, amt=document.getElementById('amt').value;if(!ben||!amt){alert(lang==='ar'?"أدخل المستفيد والمبلغ":"Enter Beneficiary & Amount");return;}if(isBlocked){alert(lang==='ar'?"⚠️ تحذير: لا يمكن التحويل - GPS وهمي قيد التشغيل - خطر 960":"⚠️ Warning: Transfer risky - Fake GPS ON - Risk 960");return;}alert((lang==='ar'?"✅ تحويل آمن SAMA\n":"✅ SAMA Secure Transfer\n")+`To: ${ben}\nAmount: SAR ${amt}\n${currentData?currentData.place:"Riyadh"}`);}
-navigator.geolocation.watchPosition(check, e=>{}, {enableHighAccuracy:true, timeout:20000, maximumAge:0});
-setLang('en');
-</script>
-</body>
-</html>
+ en:{pTitle:"SAMA Security Notice",pSub:"Verification compatible with SAMA",points:"• Location will be verified for SAMA<br>• Outside KSA = BLOCKED Risk 960<br>• Fake GPS ON = Fraud - High Risk<br>• Pre-Login = Warning + Allow<br>• OTP + Transfer = High Risk = BLOCK",cleanPre:"✅ Within KSA - Safe - Compliant",warnPre:"⚠️ Warning: Fake GPS ON - Risk 960 - Proceed with Caution (Low Risk)",fakeOn:"🚨 Fake GPS ON - Mock - Accuracy 0m - HIGH RISK",fakeOff:"✅ Fake GPS OFF - Real GPS - OK",clean:"✅ Within KSA - Compliant - Risk 100",blockHigh:"🚫 HIGH RISK - Fake GPS ON - BLOCKED - Risk 960 - OTP Verification Not Allowed",safe:"✅ Safe - Verify OTP Allowed",block:"🚫 BLOCKED - HIGH RISK 960",proceed:"Proceed to Secure Login →",warnProceed:"⚠️ Warning - Proceed to Login →",lTitle:"SAB - Saudi First Bank",ver:"VERIFICATION - OTP - HIGH RISK",vBtn:"Verify",dTitle:"💳 Dashboard",bal:"Available Balance",from:"From",to:"To",amt:"Amount (SAR)",transfer:"Transfer Now →",transferBlock:"🚫 BLOCKED - Transfer Not Allowed - Risk 960",logout:"Logout",dashSafe:"Within KSA - Safe",dashBlock:"🚫 HIGH RISK - Outside - BLOCKED"},
+ ar:{pTitle:"إشعار أمان SAMA",pSub:"التحقق متوافق مع SAMA",points:"• سيتم التحقق من موقعك<br>• خارج المملكة = محظور خطر 960<br>• GPS وهمي = خطر عالي<br>• قبل الدخول = تحذير + مسموح<br>• OTP + تحويل = خطر عالي = محظور",cleanPre:"✅ داخل المملكة - آمن",warnPre:"⚠️ تحذير: GPS وهمي - خطر 960 - متابعة بحذر (خطر من
