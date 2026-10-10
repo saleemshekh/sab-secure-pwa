@@ -6,153 +6,120 @@
 <title>SAB Secure - SAMA Compliant</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f172a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/484/484167.png">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* High Contrast Fix */
+  body{background:#0f172a}
+ .label-dark{color:#000!important; font-weight:800!important; font-size:13px!important; letter-spacing:0.5px}
+ .value-dark{color:#000!important; font-weight:700!important; font-size:16px!important}
+ .acc-dark{color:#1a1a1a!important; font-weight:600!important; font-size:13px!important}
+</style>
 </head>
-<body class="bg-[#0f172a] text-white min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="bg-white text-gray-900 rounded-3xl shadow-2xl w-full max-w-md p-6">
-  <!-- Language Switch -->
+<div class="bg-white text-black rounded-3xl shadow-2xl w-full max-w-md p-6">
   <div class="flex justify-end gap-2 mb-2">
-    <button id="btnEn" onclick="setLang('en')" class="text-xs px-3 py-1 rounded-full bg-[#0f172a] text-white font-bold">EN</button>
-    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-3 py-1 rounded-full bg-gray-200 text-gray-600 font-bold">العربية</button>
+    <button id="btnEn" onclick="setLang('en')" class="text-xs px-4 py-1.5 rounded-full bg-[#0f172a] text-white font-bold">EN</button>
+    <button id="btnAr" onclick="setLang('ar')" class="text-xs px-4 py-1.5 rounded-full bg-gray-300 text-black font-bold border border-gray-400">العربية</button>
   </div>
 
-  <!-- Logo -->
   <div class="text-center mb-6">
-    <img src="https://cdn-icons-png.flaticon.com/512/484/484167.png" class="w-16 h-16 mx-auto mb-3">
-    <h1 id="title" class="text-2xl font-bold text-[#0f172a]">SAB Secure</h1>
-    <p id="subTitle" class="text-sm text-gray-500">SAMA Compliant Location Verification</p>
-    <span class="inline-block mt-2 bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">● PWA Active - Install Ready</span>
+    <div class="w-16 h-16 bg-black rounded-full mx-auto flex items-center justify-center text-3xl">📍</div>
+    <h1 id="title" class="text-[22px] font-black text-black mt-3">SAB Secure</h1>
+    <p id="subTitle" class="text-[13px] font-bold text-black mt-1">SAMA Compliant Location Verification</p>
+    <span class="inline-block mt-2 bg-green-200 text-black text-xs px-3 py-1 rounded-full font-bold border border-green-700">● PWA Active - Install Ready</span>
   </div>
 
-  <!-- SAMA Card -->
   <div class="space-y-4">
-    <div class="bg-gray-50 p-4 rounded-xl">
+    <div class="bg-gray-100 p-4 rounded-xl border-2 border-gray-300">
       <div class="flex justify-between items-center">
-        <label id="locLabel" class="text-xs font-bold text-gray-500">USER LOCATION</label>
-        <span class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">● LIVE AUTO</span>
+        <label id="locLabel" class="label-dark">USER LOCATION</label>
+        <span class="text-[10px] bg-green-300 text-black px-2 py-1 rounded-full font-black border border-green-800">● LIVE AUTO - 3s</span>
       </div>
-      <p id="location" class="font-mono text-sm mt-1">Fetching GPS...</p>
-      <p id="accText" class="font-mono text-[11px] text-gray-500 mt-1"></p>
-      <p id="status" class="text-xs mt-2 text-blue-600 font-bold">Checking SAMA Geofence...</p>
+      <p id="location" class="value-dark mt-2 font-mono">Fetching GPS...</p>
+      <p id="accText" class="acc-dark mt-1 font-mono"></p>
+      <p id="status" class="text-[13px] mt-3 font-black p-2 rounded-lg">Checking SAMA Geofence...</p>
     </div>
 
-    <div class="bg-gray-50 p-4 rounded-xl">
-      <label class="text-xs font-bold text-gray-500">VERIFICATION</label>
+    <div class="bg-gray-100 p-4 rounded-xl border-2 border-gray-300">
+      <label class="label-dark">VERIFICATION</label>
       <div class="flex gap-2 mt-2">
-        <input id="otp" type="text" placeholder="Enter OTP" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none">
-        <button onclick="verify()" class="bg-[#0f172a] text-white px-5 py-2 rounded-lg text-sm font-bold">Verify</button>
+        <input id="otp" type="text" placeholder="Enter OTP" class="flex-1 border-2 border-black rounded-lg px-3 py-2.5 text-[15px] font-bold text-black outline-none bg-white">
+        <button onclick="verify()" class="bg-black text-white px-6 py-2.5 rounded-lg text-sm font-black">Verify</button>
       </div>
     </div>
 
-    <button id="mainBtn" onclick="getLocation()" class="w-full bg-[#0f172a] text-white py-3 rounded-xl font-bold">📍 Verify My Location (SAMA)</button>
-    <p id="samaTxt" class="text-[10px] text-center text-gray-400">Complies with SAMA CSF & NCA ECC-1:2018<br>Data stays inside KSA - No external API - Fake GPS Detection Active</p>
+    <button id="mainBtn" onclick="forceRefresh()" class="w-full bg-black text-white py-3.5 rounded-xl font-black text-[16px]">📍 Verify My Location (SAMA)</button>
+    <p id="samaTxt" class="text-[11px] text-center text-black font-bold leading-tight">Complies with SAMA CSF & NCA ECC-1:2018<br>Data stays inside KSA - Fake GPS Detection Active</p>
+    <p id="autoInfo" class="text-[10px] text-center text-black font-bold">Auto Refresh: Every 3 Seconds</p>
   </div>
 </div>
 
 <script>
-let currentLang='en';
-let lastLat=null, lastLon=null;
+let currentLang='en', lastLat=null, lastLon=null, watchId=null;
 
 const T={
- en:{
-  title:"SAB Secure", sub:"SAMA Compliant Location Verification",
-  loc:"USER LOCATION", safe:"📍 Verify My Location (SAMA)", block:"🚫 Blocked - Fake Detected",
-  fetching:"Fetching GPS...", checking:"Checking SAMA Geofence...",
-  clean:"✅ Inside KSA - SAMA Compliant - Risk 100 - Clean Location",
-  mock:"⚠️ Mock/Fake Location Detected - Risk 960 - BLOCKED - SAMA Alert",
-  safeFollow:"✅ Safe follow-up - All Allowed",
-  unsafe:"🚫 Block & Report to SAMA - Risk 960",
-  sama:"Complies with SAMA CSF & NCA ECC-1:2018<br>Data stays inside KSA - No external API - Fake GPS Detection Active",
-  otpOk:"✅ Verified - SAMA Log Saved - Risk 100", otpErr:"Enter 6-digit OTP",
-  acc:"Accuracy"
- },
- ar:{
-  title:"SAB - البنك السعودي الأول", sub:"التحقق من الموقع متوافق مع SAMA",
-  loc:"موقع المستخدم", safe:"📍 التحقق من موقعي (SAMA)", block:"🚫 محظور - تم اكتشاف تزييف",
-  fetching:"جاري جلب GPS...", checking:"جاري التحقق من سياج SAMA...",
-  clean:"✅ داخل المملكة - متوافق مع SAMA - مستوى الخطر 100 - موقع نظيف",
-  mock:"⚠️ تم اكتشاف موقع وهمي - مستوى الخطر 960 - محظور - تنبيه SAMA",
-  safeFollow:"✅ متابعة آمنة - مسموح",
-  unsafe:"🚫 حظر وإبلاغ SAMA - خطر 960",
-  sama:"متوافق مع SAMA CSF و NCA ECC-1:2018<br>البيانات داخل المملكة - كشف GPS الوهمي نشط",
-  otpOk:"✅ تم التحقق - تم حفظ سجل SAMA - خطر 100", otpErr:"أدخل رمز OTP المكون من 6 أرقام",
-  acc:"الدقة"
- }
+ en:{title:"SAB Secure",sub:"SAMA Compliant Location Verification",loc:"USER LOCATION",fetching:"Fetching GPS...",checking:"Checking SAMA Geofence...",clean:"✅ Inside KSA - SAMA Compliant - Risk 100 - Clean Location",mock:"⚠️ Mock/Fake Location Detected - Risk 960 - BLOCKED - SAMA Alert",safe:"✅ Safe follow-up - All Allowed",block:"🚫 BLOCKED - Fake Detected - Risk 960",sama:"Complies with SAMA CSF & NCA ECC-1:2018<br>Data stays inside KSA - Fake GPS Detection Active",otpOk:"✅ Verified - SAMA Log Saved",otpErr:"Enter 6-digit OTP",acc:"Accuracy",auto:"Auto Refresh: Every 3 Seconds",verify:"📍 Verify My Location (SAMA)"},
+ ar:{title:"SAB - البنك السعودي الأول",sub:"التحقق من الموقع متوافق مع SAMA",loc:"موقع المستخدم",fetching:"جاري جلب GPS...",checking:"جاري التحقق...",clean:"✅ داخل المملكة - متوافق مع SAMA - خطر 100 - موقع نظيف",mock:"⚠️ تم اكتشاف موقع وهمي - خطر 960 - محظور",safe:"✅ متابعة آمنة - مسموح",block:"🚫 محظور - خطر 960",sama:"متوافق مع SAMA CSF و NCA ECC-1:2018<br>البيانات داخل المملكة - كشف GPS الوهمي نشط",otpOk:"✅ تم التحقق",otpErr:"أدخل OTP",acc:"الدقة",auto:"تحديث تلقائي: كل 3 ثوان",verify:"📍 التحقق من موقعي (SAMA)"}
 };
 
 function setLang(l){
  currentLang=l;
- document.documentElement.lang=l;
  document.documentElement.dir=l==='ar'?'rtl':'ltr';
- document.getElementById('btnEn').className = l==='en'?"text-xs px-3 py-1 rounded-full bg-[#0f172a] text-white font-bold":"text-xs px-3 py-1 rounded-full bg-gray-200 text-gray-600 font-bold";
- document.getElementById('btnAr').className = l==='ar'?"text-xs px-3 py-1 rounded-full bg-[#0f172a] text-white font-bold":"text-xs px-3 py-1 rounded-full bg-gray-200 text-gray-600 font-bold";
+ document.getElementById('btnEn').className=l==='en'?"text-xs px-4 py-1.5 rounded-full bg-black text-white font-bold":"text-xs px-4 py-1.5 rounded-full bg-gray-300 text-black font-bold border border-gray-400";
+ document.getElementById('btnAr').className=l==='ar'?"text-xs px-4 py-1.5 rounded-full bg-black text-white font-bold":"text-xs px-4 py-1.5 rounded-full bg-gray-300 text-black font-bold border border-gray-400";
  document.getElementById('title').innerText=T[l].title;
  document.getElementById('subTitle').innerText=T[l].sub;
  document.getElementById('locLabel').innerText=T[l].loc;
  document.getElementById('samaTxt').innerHTML=T[l].sama;
+ document.getElementById('autoInfo').innerText=T[l].auto;
+ document.getElementById('mainBtn').innerText=T[l].verify;
  if(window.lastData) render(window.lastData);
 }
 
 function render(data){
  window.lastData=data;
- const locEl=document.getElementById('location');
- const statusEl=document.getElementById('status');
- const btn=document.getElementById('mainBtn');
- const accEl=document.getElementById('accText');
- locEl.innerText=data.lat.toFixed(6)+", "+data.lon.toFixed(6);
- accEl.innerText=T[currentLang].acc+": "+Math.round(data.acc)+"m - Alt: "+(data.alt===null?"null":data.alt);
+ document.getElementById('location').innerText=data.lat.toFixed(6)+", "+data.lon.toFixed(6);
+ document.getElementById('accText').innerText=T[currentLang].acc+": "+Math.round(data.acc)+"m - Alt: "+(data.alt?data.alt.toFixed(1):"0")+"m - "+new Date().toLocaleTimeString();
+ let statusEl=document.getElementById('status'), btn=document.getElementById('mainBtn');
  if(data.isBlocked){
-  statusEl.innerText=data.isMock?T[currentLang].mock:"❌ Outside KSA - Blocked per SAMA";
-  statusEl.className="text-xs mt-2 text-red-600 font-bold";
-  btn.innerText=T[currentLang].unsafe;
-  btn.className="w-full bg-red-700 text-white py-3 rounded-xl font-bold";
+  statusEl.innerText=data.isMock?T[currentLang].mock:"❌ Outside KSA - Blocked";
+  statusEl.className="text-[13px] mt-3 font-black p-2 rounded-lg bg-red-200 text-black border-2 border-red-700";
+  btn.innerText=T[currentLang].block; btn.className="w-full bg-red-700 text-white py-3.5 rounded-xl font-black text-[16px]";
  } else {
   statusEl.innerText=T[currentLang].clean;
-  statusEl.className="text-xs mt-2 text-green-600 font-bold";
-  btn.innerText=T[currentLang].safeFollow;
-  btn.className="w-full bg-[#0f172a] text-white py-3 rounded-xl font-bold";
+  statusEl.className="text-[13px] mt-3 font-black p-2 rounded-lg bg-green-200 text-black border-2 border-green-700";
+  btn.innerText=T[currentLang].safe; btn.className="w-full bg-black text-white py-3.5 rounded-xl font-black text-[16px]";
  }
 }
 
-function getLocation(){
- const locEl=document.getElementById('location');
- const statusEl=document.getElementById('status');
- locEl.innerText=T[currentLang].fetching;
- statusEl.innerText=T[currentLang].checking;
- if(!navigator.geolocation){ locEl.innerText="Geolocation not supported"; return; }
- navigator.geolocation.getCurrentPosition(pos=>{
-  let lat=pos.coords.latitude, lon=pos.coords.longitude;
-  let acc=pos.coords.accuracy, alt=pos.coords.altitude;
-  let inSaudi = lat>16 && lat<32 && lon>34 && lon<56;
-  let isMock=false;
-
-  // --- MERGED SAMA FAKE DETECTION ---
-  if((alt===0 || alt===null) && acc<100) isMock=true; // Riyadh height 600m, fake gives 0
-  if(Number.isInteger(acc) && acc<30) isMock=true; // Real GPS 20.34, Fake 20
-  if(acc<=5) isMock=true; // Too perfect
-  if(lastLat!==null){
-    let dLat=Math.abs(lat-lastLat), dLon=Math.abs(lon-lastLon);
-    if(dLat>0.01 || dLon>0.01) isMock=true; // Teleport 1km
-  }
-  lastLat=lat; lastLon=lon;
-  let isBlocked = isMock ||!inSaudi;
-  render({lat,lon,acc,alt,isMock,inSaudi,isBlocked});
- }, err=>{
-  locEl.innerText="Location Error: Enable GPS";
- }, {enableHighAccuracy:true, maximumAge:0, timeout:10000});
+function checkSAMA(pos){
+ let lat=pos.coords.latitude, lon=pos.coords.longitude, acc=pos.coords.accuracy, alt=pos.coords.altitude;
+ let inSaudi=lat>16&&lat<32&&lon>34&&lon<56, isMock=false;
+ if((alt===0||alt===null)&&acc<100) isMock=true;
+ if(Number.isInteger(acc)&&acc<30) isMock=true;
+ if(acc<=5) isMock=true;
+ if(lastLat!==null){ if(Math.abs(lat-lastLat)>0.01||Math.abs(lon-lastLon)>0.01) isMock=true; }
+ lastLat=lat; lastLon=lon;
+ render({lat,lon,acc,alt,isMock,inSaudi,isBlocked:isMock||!inSaudi});
 }
 
-function verify(){
- const otp=document.getElementById('otp').value;
- if(otp.length==6){ alert(T[currentLang].otpOk); }
- else { alert(T[currentLang].otpErr); }
+function forceRefresh(){
+  document.getElementById('location').innerText="Refreshing...";
+  navigator.geolocation.getCurrentPosition(checkSAMA, e=>{alert(e.message)}, {enableHighAccuracy:true, maximumAge:0, timeout:10000});
 }
 
-getLocation();
+function startAuto(){
+ if(watchId) navigator.geolocation.clearWatch(watchId);
+ // AUTO REFRESH FIX - watchPosition + Interval
+ watchId = navigator.geolocation.watchPosition(checkSAMA, null, {enableHighAccuracy:true, maximumAge:0, timeout:10000});
+ // Har 3 sec me force refresh
+ setInterval(()=>{ navigator.geolocation.getCurrentPosition(checkSAMA, null, {enableHighAccuracy:true, maximumAge:0}); }, 3000);
+}
+
+function verify(){ let otp=document.getElementById('otp').value; alert(otp.length==6?T[currentLang].otpOk:T[currentLang].otpErr); }
+
+startAuto();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
