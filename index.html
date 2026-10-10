@@ -96,4 +96,14 @@ function updateUI(d){
  document.getElementById('country').innerText=d.place;document.getElementById('preCountry').innerText=d.place;
 }
 async function render(d){let place=getFallback(d.lat,d.lon);d.place=place;updateUI(d);const dyn=await fetchDynamic(d.lat,d.lon);if(dyn){d.place=dyn;updateUI(d);}}
-function check(p){let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude;let inSaudi=lat>16&&lat<33&&lon>34&&lon<56;let isMock=false;if(acc===0)isMock=true;if((alt===0||alt===null)&&acc<3)isMock=true;if(lastLat!==null){const dLat=(lat-lastLat)*Math.PI/180,dLon=(lon-lastLon)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lastLat*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)**2;const km=6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));if(km<0.01
+function check(p){let lat=p.coords.latitude, lon=p.coords.longitude, acc=p.coords.accuracy, alt=p.coords.altitude;let inSaudi=lat>16&&lat<33&&lon>34&&lon<56;let isMock=false;if(acc===0)isMock=true;if((alt===0||alt===null)&&acc<3)isMock=true;if(lastLat!==null){const dLat=(lat-lastLat)*Math.PI/180,dLon=(lon-lastLon)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lastLat*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)**2;const km=6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));if(km<0.01 && isMock===lastMock)return;}lastLat=lat;lastLon=lon;lastMock=isMock;render({lat,lon,acc,alt,block:isMock||!inSaudi,isMock,place:getFallback(lat,lon)});}
+function goLogin(){document.getElementById('preLogin').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');}
+function goDashboard(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');}
+function logout(){document.getElementById('dashboard').classList.add('hidden');document.getElementById('loginScreen').classList.add('hidden');document.getElementById('preLogin').classList.remove('hidden');}
+function verifyAndGoDashboard(){let v=document.getElementById('otp').value;if(v.length<4){alert(lang==='ar'?"أدخل رمز OTP":"Enter OTP");return;}goDashboard();}
+function doTransfer(){let ben=document.getElementById('ben').value, amt=document.getElementById('amt').value;if(!ben||!amt){alert(lang==='ar'?"أدخل المستفيد والمبلغ":"Enter Beneficiary & Amount");return;}if(isBlocked){alert(lang==='ar'?"⚠️ تحذير: لا يمكن التحويل - GPS وهمي قيد التشغيل - خطر 960":"⚠️ Warning: Transfer risky - Fake GPS ON - Risk 960");return;}alert((lang==='ar'?"✅ تحويل آمن SAMA\n":"✅ SAMA Secure Transfer\n")+`To: ${ben}\nAmount: SAR ${amt}\n${currentData?currentData.place:"Riyadh"}`);}
+navigator.geolocation.watchPosition(check, e=>{}, {enableHighAccuracy:true, timeout:20000, maximumAge:0});
+setLang('en');
+</script>
+</body>
+</html>
