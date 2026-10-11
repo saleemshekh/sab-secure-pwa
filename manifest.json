@@ -1,6 +1,8 @@
 {
   "name": "Secure",
-  "short_name": "Secure",
+  "short_name":
+ "Secure",
+"description" :"My personal location tool for testing", 
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
