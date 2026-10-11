@@ -192,5 +192,10 @@ setLang('en');
 window.testFake = ()=>{ setLocation(6.749944,4.121922,0,594.1); }
 window.testReal = ()=>{ setLocation(24.672543,46.712856,9,594.1); }
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
 </body>
 </html>
